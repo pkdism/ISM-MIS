@@ -1,0 +1,107 @@
+.notification-drawer {
+	position: fixed;
+	left: 230px;
+	width: 400px;
+	top: 60px;
+	bottom: 10px;
+	overflow-y: auto;
+	box-shadow: 5px 0px 5px rgba(0, 0, 0, 0.1);
+	background: #FAFAFA;
+	z-index: 100;
+	cursor: default;
+}
+
+.notification-drawer.closed {
+	display: none;
+}
+
+.notification-drawer .notification {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.notification-drawer > .read > h3,
+.notification-drawer > .unread > h3 {
+	font-weight: bold;
+	padding: 5px;
+	display: block;
+	color: #777;
+	font-weight: 600;
+	text-align: center;
+	font-size: 16px;
+}
+
+.notification-drawer > .read  .-mis-notification-link:hover {
+	background: #F6F6F6 !important;
+}
+.notification-drawer > .read  .-mis-notification-link {
+	color: #777 !important;
+	background: #FAFAFA !important;
+}
+.-mis-notification-link {
+	text-decoration: none;
+	display: block;
+	padding: 5px;
+	border-bottom: 1px #999 solid;
+}
+
+.-mis-notification-link img{
+	text-decoration: none;
+	float: left;
+	width: 60px;
+	height: 60px;
+	padding: 5px;
+}
+
+
+.notification > .-mis-notification-link:hover {
+	text-decoration: none !important;
+	background: #EEF;;
+}
+
+.notification > .-mis-notification-link {
+	background: #F9F9FF;
+	color: #227;
+}
+
+.notification.error > .-mis-notification-link:hover {
+	background: #FEE;
+}
+
+.notification.error > .-mis-notification-link {
+	background: #FFF9F9;
+	color: #722;
+}
+
+.notification.success > .-mis-notification-link:hover {
+	background: #EFE;
+}
+
+.notification.success > .-mis-notification-link {
+	background: #F9FFF9;
+	color: #272;
+}
+
+.-mis-notification-link .description {
+	margin: 0;
+	padding: 2px;
+}
+.-mis-notification-link h2 {
+	font-size: 14px;
+	font-weight: bold;
+	padding: 0;
+	margin: 1px;
+	color: #444;
+}
+
+
+.-mis-notification-link .date {
+	font-size: 10px;
+	font-weight: 100;
+	padding: 0;
+	margin: 0px;
+	color: #888;
+	display: block;
+	text-align: right;
+}

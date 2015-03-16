@@ -1,0 +1,2 @@
+<p><?php if($error!="")  $this->notification->drawNotification('',$error,'error'); ?></p>
+<?php  echo form_open_multipart('student/student_add/insert_basic_details','onSubmit="return form_validation();"');

@@ -1,0 +1,32 @@
+
+//----------------------------------------------------------------------------
+In application/config/routes.php
+.....adding route for assets folder
+
+assets
+|------js
+|      |
+|      |---employee
+|      |       |
+|      |       |----basic_details_script.js
+|      |
+|      |----jquery.js
+|
+|-----images
+|	|
+|	|------employee
+|	|	|
+|	|	|------001
+|	|	|	|----emp_100_img.jpg
+|	|	|
+|	|	|------noProfileImage.png
+|
+|------css
+|
+|
+|
+|
+
+added --- > $route['assets/(:any)'] = 'assets/$1';
+
+//----------------------------------------------------------------------------

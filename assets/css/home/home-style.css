@@ -1,0 +1,88 @@
+.feed-container {
+	display: block;
+	height: 100%;
+	max-height: 100%;
+	width: auto;
+	margin: auto;
+	padding-right: 40px;
+	padding-left: 40px;
+	margin-right: 27%;
+}
+
+.calendar {
+	display: block;
+	width: 25%;
+	position: fixed;
+	z-index: 200;
+	background: #eee;
+	top: 40px;
+	right: 0px;
+	bottom: 30px;
+}
+
+.calendar-menu-container {
+	height: 225px;
+	background: #001a7c;
+	text-align: center;
+	position: relative;
+}
+
+.calendar-menu {
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	height: 150px;
+	margin: auto;
+}
+.calendar-menu span {
+	color: #FFF;
+	padding: 0;
+	margin: 0;
+	text-transform: uppercase;
+}
+
+.calendar-day {
+	color: #d7def9 !important;
+	font-size: 40px;
+	line-height: 40px;
+	display: block;
+	padding: 0;
+	margin-bottom: 10px;
+}
+
+.calendar-date {
+	font-weight: bold;
+	font-size: 113px;
+	display: inline-block;
+	line-height: 100px;
+}
+
+.calendar-month-year {
+	display: inline-block;
+}
+
+.calendar-month {
+	font-weight: bold;
+	font-size: 50px;
+	line-height: 50px;
+	display: block;
+}
+
+.calendar-year {
+	font-size: 40px;
+	display: block;
+	line-height: 40px;
+}
+
+
+.calendar-view {
+	width: 100%;
+	margin-top: 50px;
+}
+
+.calendar-view img {
+	width: 100%;
+	margin-top: 50px;
+}

@@ -1,0 +1,540 @@
+@charset "utf-8";
+
+
+body {
+	margin: 0;
+	padding: 0;
+	min-width: 1000px;
+	background: #EEE;
+}
+
+body, input, button, select, textarea {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+
+/* input and form styles */
+
+input[type=text], input[type=password], input[type=file], input[type=button], input[type=submit], input[type=reset], select, button, textarea {
+	padding: 5px 10px;
+	margin: 3px;
+	border: 0;
+	border: 1px #ccc solid;
+	min-height: 20px;
+	-webkit-transition: all 0.2s;
+	   -moz-transition: all 0.2s;
+		 -o-transition: all 0.2s;
+			transition: all 0.2s;
+}
+
+input[type=text]:hover, input[type=password]:hover, select:hover, textarea:hover {
+	border: 1px #aaa solid;
+}
+
+input[type=button]:hover, input[type=submit]:hover, button:hover, input[type=reset]:hover {
+	background: #00094a;
+}
+
+input[type=text], input[type=password], select, textarea {
+	border: 1px #D1D1D1 solid;
+}
+
+input[type=text]:focus, input[type=password]:focus, select:focus, textarea:focus {
+	border: 1px #D1D1D1 solid;
+	box-shadow: 0px 0px 7px rgba(120, 120, 255, 0.5);
+	outline: 0;
+}
+input[type=button]:focus, input[type=submit]:focus, button:focus, input[type=reset]:focus {
+	background: #00094a;
+	box-shadow: 0px 0px 7px rgba(100, 100, 100, 0.5);
+	outline: 0;
+}
+
+input[type=button], input[type=submit], button, input[type=reset] {
+	background: #001a7c;
+	border: 1px #001a7c solid;
+	color: #FFF;
+	cursor: pointer;
+}
+
+input[type=button]:active, input[type=submit]:active, button:active, input[type=reset]:active {
+	background: #223caf;
+	position: relative;
+	top: 2px;
+	left: 2px;
+}
+
+input[type=button].error, input[type=submit].error, button.error {
+	background: #c00;
+	border: 1px #c00 solid;
+}
+input[type=button].error:hover, input[type=submit].error:hover, button.error:hover,input[type=button].error:focus, input[type=submit].error:focus, button.error:focus {
+	background: #a00;
+}
+
+
+select {
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
+
+a {
+	text-decoration: none;
+	color: #223caf;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:active {
+	color: #334cc0;
+}
+
+a.big-link {
+	font-size: 18px;
+	display: inline-block;
+	margin: 5px 0px;
+}
+
+i.loading {
+	display: inline-block;
+	vertical-align: middle;
+	width: 40px;
+	height: 40px;
+	background: url('../images/loading.gif') center center no-repeat;
+}
+
+
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: normal;
+	margin: 3px 0px;
+	padding: 0;
+}
+
+
+.page-head {
+	padding-left: 20px;
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+	border-bottom: 1px #eee solid;
+}
+
+.notification {
+	background: #DDF;
+	padding: 5px;
+	border: 1px #223caf solid;
+	margin: 10px 0px;
+	text-align: left;
+	position: relative;
+}
+
+.notification.error{
+	background: #FDD;
+	border: 1px #af3c22 solid;
+}
+
+.notification.success{
+	background: #DFD;
+	border: 1px #3caf22 solid;
+}
+
+table tr th {
+	background: #00094a;
+	color: #FFF;
+}
+table tr td, table tr th {
+	padding: 5px 10px;
+	margin: 0;
+}
+
+table tr:nth-child(odd) {
+	background: #eee;
+}
+
+table[nozebra] tr:nth-child(odd) {
+	background: transparent;
+}
+
+.column {
+	width: 48%;
+	margin-right: 1%;
+	display: inline-block;
+	text-align: justify;
+}
+
+hr {
+	height: 1px;
+	border: 0;
+	background: #ccc;
+	margin: 20px 0px;
+}
+
+/* Search Bar Styles */
+.-mis-search-bar {
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 40px;
+	background: #666;
+	min-width: 800px;
+	box-shadow: 0px 0px 3px rgba(100, 100, 100, 0.4);
+	z-index: 100;
+}
+
+.-mis-search-bar div {	
+	float: left;
+	height: inherit;
+}
+
+.-mis-logo {
+	width: 105px;
+	background: url('../images/mis-logo-small.png') no-repeat;
+}
+
+.-mis-search-button {
+	width: 505px;
+	padding: auto;
+	vertical-align: middle;
+}
+.-mis-search-button form {
+	display: block;
+	height: 30px;
+	margin: 1px 0px;
+	text-align: center;
+}
+
+.-mis-search-text {
+	width: 400px;
+}
+
+div.-mis-right-options {
+	float: right;
+	margin-left: 0px 5px;
+}
+.-mis-search-bar a {
+	display: block;
+	height: 40px;
+	padding: 0px 7px;
+	line-height: 40px;
+	vertical-align: middle;
+	text-decoration: none;
+	color: #FFF;
+}
+
+.small-profile-thumb {
+	float: left;
+	height: 40px;
+	margin-right: -5px;
+}
+
+
+
+
+
+/* Navbar Styles */
+
+.-mis-navbar {
+	width: 210px;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	background: #EEE;
+	padding-top: 50px;
+	padding-left: 10px;
+	padding-right: 10px;
+	overflow: visible;
+	z-index: 4;
+}
+
+.-mis-profile-photo {
+	width: 210px;
+	position: relative;
+	overflow: hidden;
+	margin-bottom: 20px;
+}
+.-mis-profile-photo img {
+	width: 100%;
+	z-index: 9;
+}
+
+.-mis-profile-details {
+	line-height: 1.25;
+	font-size: 14px;
+	opacity: 0;
+	background: rgba(255, 255, 255, 0.8);
+	position: absolute;
+	left: 0;
+	top: 50px;
+	right: 0;
+	bottom: 0;
+	padding: 10px;
+	box-shadow: 0px 0px 2px #223caf;
+	color: #000;
+	
+	-webkit-transition: all 0.5s ease-in-out 0;
+	   -moz-transition: all 0.5s ease-in-out 0;
+		 -o-transition: all 0.5s ease-in-out 0;
+			transition: all 0.5s ease-in-out 0;
+}
+.-mis-profile-photo:hover .-mis-profile-details {
+	top: 0;
+	opacity: 1;
+}
+
+
+.-mis-menu-authtype {
+	position: relative;
+	z-index: 1;
+}
+
+.-mis-counter {
+	position: absolute;
+	display: block;
+	text-align: center;
+	min-width: 10px;
+	height: 10px;
+	padding: 5px;
+	font-size: 12px;
+	line-height: 10px;
+	font-weight: bold;
+	color: #FFF;
+	background: #999;
+	border-radius: 20px;
+	top: 7px;
+	right: 5px;
+	cursor: pointer;
+}
+
+.-mis-counter.active {
+	background: #D00;
+}
+
+
+
+.-mis-menu-authtype > .notification-drawer {
+	position: fixed;
+	left: 230px;
+	width: 400px;
+	top: 40px;
+	bottom: 10px;
+	overflow-y: auto;
+	box-shadow: 5px 0px 5px rgba(0, 0, 0, 0.1);
+	background: #FAFAFA;
+	display: none;
+}
+
+.-mis-menu-authtype > .notification-drawer .notification {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.-mis-menu-authtype > .notification-drawer > .read > h3,
+.-mis-menu-authtype > .notification-drawer > .unread > h3 {
+	font-weight: bold;
+	padding: 5px;
+	display: block;
+	color: #777;
+	font-weight: 600;
+	text-align: center;
+}
+
+.-mis-menu-authtype > .notification-drawer > .read  .-mis-notification-link:hover {
+	background: #F6F6F6 !important;
+}
+.-mis-menu-authtype > .notification-drawer > .read  .-mis-notification-link {
+	color: #777 !important;
+	background: #FAFAFA !important;
+}
+.-mis-notification-link {
+	text-decoration: none;
+	display: block;
+	padding: 5px;
+	border-bottom: 1px #999 solid;
+}
+
+.-mis-notification-link img{
+	text-decoration: none;
+	float: left;
+	width: 60px;
+	height: 60px;
+	padding: 5px;
+}
+
+
+.notification > .-mis-notification-link:hover {
+	text-decoration: none !important;
+	background: #EEF;;
+}
+
+.notification > .-mis-notification-link {
+	background: #F9F9FF;
+	color: #227;
+}
+
+.notification.error > .-mis-notification-link:hover {
+	background: #FEE;
+}
+
+.notification.error > .-mis-notification-link {
+	background: #FFF9F9;
+	color: #722;
+}
+
+.notification.success > .-mis-notification-link:hover {
+	background: #EFE;
+}
+
+.notification.success > .-mis-notification-link {
+	background: #F9FFF9;
+	color: #272;
+}
+
+.-mis-notification-link .description {
+	margin: 0;
+	padding: 2px;
+}
+.-mis-notification-link h2 {
+	font-size: 14px;
+	font-weight: bold;
+	padding: 0;
+	margin: 1px;
+	color: #444;
+}
+
+
+.-mis-notification-link .date {
+	font-size: 10px;
+	font-weight: 100;
+	padding: 0;
+	margin: 0px;
+	color: #888;
+	display: block;
+	text-align: right;
+}
+
+
+.-mis-menu-authtype > .role {
+	margin: 0px -10px;
+	padding: 7px 0px 7px 30px;
+	color: #000;
+	font-weight: bold;
+	background: url(../images/arrow-down.png) no-repeat 10px center;
+	background-color: #ddd;
+	cursor: pointer;
+}
+
+.-mis-menu-authtype:hover > .role {
+	background-color: #ccc;
+}
+
+.-mis-menu-authtype.collapsed > .role {
+	background-image: url(../images/arrow.png);
+}
+
+.-mis-navbar > .-mis-menu-authtype.collapsed > ul {
+	display: none;
+}
+
+.-mis-navbar > .-mis-menu-authtype > ul {
+	display: block;
+}
+
+
+.-mis-navbar ul {
+	margin: 0px;
+	list-style-type: none;
+	padding: 0px;
+	z-index: 2;
+}
+
+.-mis-navbar > ul {
+	margin-top: 10px;
+}
+
+.-mis-navbar ul li.arrow {
+	background: url(../images/arrow.png) no-repeat right center;
+}
+
+.-mis-navbar ul > li {
+	padding: 0px;
+	width: 100%;
+	margin: 0;
+	position: relative;
+}
+
+.-mis-navbar ul > li > a {
+	padding: 7px 5px;
+	display: block;
+	color: #001a8d;
+	-webkit-transition: all 0.2s ease-in-out 0;
+	   -moz-transition: all 0.2s ease-in-out 0;
+		 -o-transition: all 0.2s ease-in-out 0;
+			transition: all 0.2s ease-in-out 0;
+}
+
+.-mis-navbar ul li.current {
+	border-left: 2px #223caf solid;
+}
+
+
+.-mis-navbar ul > li > ul {
+	display: none;
+	position: absolute;
+	background: #EEE;
+	box-shadow: 0px 0px 3px rgba(100, 100, 100, 0.4);
+	top: 0px;
+	right: -100%;
+	width: inherit;
+	padding: 5px;
+}
+
+.-mis-navbar ul > li:hover > a {
+	padding: 7px 10px;
+}
+
+.-mis-navbar ul li:hover {
+	background: #ccc;
+}
+
+.-mis-navbar ul > li:hover > ul {
+	display: block;
+}
+
+
+
+/* Content Style */
+.-mis-content {
+	z-index: 2;
+	position: fixed;
+	top: 40px;
+	left: 230px;
+	right: 40px;
+	bottom: 30px;
+	overflow-y: auto;
+	padding: 10px;
+	background: #FDFDFD;
+}
+
+
+/* Footer Style */
+.-mis-footer {
+	position: fixed;
+	bottom: 0px;
+	left: 200px;
+	right: 0px;
+	height: 20px;
+	background: #EEE;
+	padding: 5px;
+	text-align: center;
+	font-size: 11px;
+	line-height: 20px;
+}

@@ -1,0 +1,23 @@
+# On branch dev
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	modified:   application/controllers/information/post_circular.php
+#	modified:   application/controllers/information/search_edit_circular.php
+#	modified:   application/models/information/post_circular_model.php
+#	modified:   application/models/information/post_minute_model.php
+#	modified:   application/models/information/post_notice_model.php
+#	modified:   application/models/information/search_edit_notice_model.php
+#	modified:   application/views/information/post_circular.php
+#	modified:   application/views/information/search_edit_notice.php
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	assets/files/information/circular/CIRCULAR_201501191216594.pdf
+#	assets/files/information/circular/CIRCULAR_201501191221534.pdf
+#	assets/files/information/circular/CIRCULAR_201501191229325.pdf
+#	assets/files/information/notice/NOTICE_201501191321349.pdf
+#	status.txt
+no changes added to commit (use "git add" and/or "git commit -a")

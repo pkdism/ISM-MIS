@@ -1,3 +1,5 @@
+# ISM - MIS
+
 This is the MIS system I (along with my team) developed for my college, IIT Dhanbad.
 
 The Management Information System handles all the admin tasks for the college such as:

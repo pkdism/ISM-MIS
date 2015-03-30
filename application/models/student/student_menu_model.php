@@ -19,6 +19,7 @@ class Student_menu_model extends CI_Model
 		$menu['deo']['Manage Students']["Edit Student Details"] = site_url('student/student_edit');
 		$menu['deo']["Manage Students"]["View Student"]["Details"] = site_url('student_view_report/view');
 		$menu['deo']["Manage Students"]["View Student"]["Report"] = site_url('student_view_report/reports');
+		$menu['deo']["Manage Students"]["View Rejected Students"] = site_url('student/student_rejected');
 		
 		//auth ==> emp
 		$menu['emp']["Manage Students"]["View Student"]["Details"] = site_url('student_view_report/view');
@@ -28,6 +29,11 @@ class Student_menu_model extends CI_Model
 		$menu['stu']=array();
 		$menu['stu']['Edit Your Details'] = site_url('student/student_editable_by_student');
 		$menu['stu']["View Your Details"] = site_url('student_view_report/view');
+
+		//$auth ==> est_ar
+		$menu['est_ar']=array();
+		$menu['est_ar']['Student Details']=array();
+		$menu['est_ar']['Student Details']['Validation Requests'] = site_url('student/student_validate');
 
 
 		return $menu;

@@ -1,0 +1,28 @@
+
+
+// Table for Discount given by Manufacturer
+CREATE TABLE IF NOT EXISTS hc_rate_dis_manu
+(
+  manu_id int(11) ,
+  m_id int(11) ,
+  mdis int(11),
+  mdvfrom DATE ,
+  mdvto DATE 
+  
+) ENGINE=InnoDB
+
+
+
+
+// Table for Discount given by Supplier
+
+CREATE TABLE IF NOT EXISTS hc_rate_dis_supp
+(
+  s_id int(11) ,
+  manu_id int(11) ,
+  m_id int(11) ,
+  sdis int(11),
+  sdvfrom DATE ,
+  sdvto DATE 
+  
+) ENGINE=InnoDB

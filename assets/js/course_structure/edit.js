@@ -13,6 +13,7 @@ function EditSubject(semester,seq_no)
 	$("[name='subjectP_"+semester+"_"+seq_no+"']").prop('disabled',false);
 	$("[name='subjectcredithours_"+semester+"_"+seq_no+"']").prop('disabled',false);
 	$("[name='subjectcontacthours_"+semester+"_"+seq_no+"']").prop('disabled',false);
+	$("[name='type_"+semester+"_"+seq_no+"']").prop('disabled',false);
 	//alert($("#editbutton_"+semester+"_"+seq_no).val());
 	$("#editbutton_"+semester+"_"+seq_no).hide();	
 	$("#savebutton_"+semester+"_"+seq_no).show();	
@@ -27,6 +28,8 @@ function SaveSubject(semester,seq_no)
 	$subjectP = $("[name='subjectP_"+semester+"_"+seq_no+"']");
 	$subjectcredithours = $("[name='subjectcredithours_"+semester+"_"+seq_no+"']");
 	$subjectcontacthours = $("[name='subjectcontacthours_"+semester+"_"+seq_no+"']");
+	//console.log(semester+seq_no);
+	$type = $("[name='type_"+semester+"_"+seq_no+"']");
 	//$contacthours = $subjectL.val() + $subjectT.val() + $subjectP.val();
 	
 	$subjectid.prop("disabled",true);
@@ -36,7 +39,9 @@ function SaveSubject(semester,seq_no)
 	$subjectP.prop("disabled",true);
 	$subjectcredithours.prop("disabled",true);
 	$subjectcontacthours.prop("disabled",true);
-	var $subjectdetails = {'id':$subjectid.attr('id'),'subject_id':$subjectid.val(),'name':$subjectname.val(),'L':$subjectL.val(),'T':$subjectT.val(),'P':$subjectP.val(),'credit_hours':$subjectcredithours.val(),'contact_hours':$subjectcontacthours.val()};
+	$type.prop("disabled",true);
+	
+	var $subjectdetails = {'id':$subjectid.attr('id'),'subject_id':$subjectid.val(),'name':$subjectname.val(),'L':$subjectL.val(),'T':$subjectT.val(),'P':$subjectP.val(),'credit_hours':$subjectcredithours.val(),'contact_hours':$subjectcontacthours.val(),'type':$type.val()};
 	$subjectdetails = JSON.stringify($subjectdetails);
 
 	

@@ -4,7 +4,7 @@ class Regular_check_acdamic extends MY_Controller
 {		
 		function __construct()
 			{
-				parent::__construct(array('deo'));
+				parent::__construct(array('arac'));
 				$this->addJS("student_view_report/stu_report_file.js");
 			}
 	
@@ -38,6 +38,8 @@ class Regular_check_acdamic extends MY_Controller
 				
 				$data['carryover']=$this->get_carryover->getCarryoverByformId($data['student'][0]->form_id);
 				$data['confirm']=$this->get_subject->getConfirm($data['student'][0]->form_id);
+				$data['CB']= $this->getCbByfromId($data['student'][0]->form_id);
+				
 				$this->load->view('templates/header_assets');
 				if($p==1){
 						$this->load->helper(array('dompdf', 'file'));
@@ -56,6 +58,33 @@ class Regular_check_acdamic extends MY_Controller
 				$this->load->model('student_sem_form/sbasic_model','',TRUE);
 				$data['acdmic_status'] = $this->input->post('hods');
 				$data['acdmic_remark'] = $this->input->post('hodRemark');
+				
+				if($this->input->post('CBS') == 'Y'){
+					//Student Acdamic Table Update
+					$acd['course_id']=$this->input->post('course');
+					$acd['branch_id']=$this->input->post('branch');
+					$this->sbasic_model->udateCourseBranch($this->input->post('stuId'),$acd);
+					// user Details Table Update
+					$ud['dept_id']=$this->input->post('dept');
+					$this->sbasic_model->udateDept($this->input->post('stuId'),$ud);
+					// change Branch Table Update
+					$cupdate['status']=$this->input->post('CBS'); 
+					$cupdate['date']=date('Y-m-d');
+					$cupdate['ip']=$this->input->ip_address();
+					$cupdate['user_id']=$this->session->userdata('id');
+					$this->sbasic_model->udateCBStatus($this->input->post('formId'),$data);
+					
+					
+				}else if($this->input->post('CBS') == 'N'){
+					
+					// change Branch Table Update
+					$cupdate['status']=$this->input->post('CBS');
+					$cupdate['date']=date('Y-m-d');
+					$cupdate['ip']=$this->input->ip_address();
+					$cupdate['user_id']=$this->session->userdata('id');
+					$this->sbasic_model->udateCBStatus($this->input->post('formId'),$data);
+					
+				}
 				if($this->input->post('hods') ==2){
 					$data['re_id'] = rand(999012,12345678);
 					}

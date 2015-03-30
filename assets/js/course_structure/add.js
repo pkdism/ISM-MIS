@@ -33,6 +33,7 @@ $(document).ready(function(){
 	$duration = 1;
 	
 	function add_course(){
+		
 		$box_form.showLoading();
 		$.ajax({url:site_url("course_structure/add/json_get_course/"+$dept_selection.find(':selected').val()),
 			success:function(data){
@@ -70,11 +71,14 @@ $(document).ready(function(){
 	
 	
 	function add_branch(duration){
+			
+		
 		$course_selection = $('#course_selection');
 		$dept_selection = $('#dept_selection');
 		$box_form.showLoading();
 		//alert($course_selection.find(':selected').val());
-		$.ajax({url:site_url("course_structure/add/json_get_branch/"+$course_selection.find(':selected').val()+"/"+$dept_selection.find(':selected').val()),
+		$.ajax({url:site_url("course_structure/add/json_get_branch/"+$course_selection.find(':selected').val()+"/"+$dept_selection.find(
+		':selected').val()),
 			success:function(data){
 				
 				base_str_branch = "<option value = '' selected = 'selected' disabled>Select Branch</option>";
@@ -90,7 +94,7 @@ $(document).ready(function(){
 				var n = d.getFullYear();
 				base_str = "<option value = '' selected = 'selected' disabled>Valid From</option>";
 				
-				for($d=n-5;$d<=n+5;$d++)
+				for($d=1926;$d<=n;$d++)
 				{
 					var session = $d+"_"+($d+1);
 					base_str += "<option value= '"+session+"'>"+$d+"-"+($d+1)+"</option>"
@@ -115,6 +119,7 @@ $(document).ready(function(){
 				$box_form.hideLoading();
 			}
 		});
+		
 	}
 	
 	function add_semester(duration){

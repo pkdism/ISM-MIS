@@ -17,6 +17,14 @@ Class Student_details_model extends CI_Model
 			return FALSE;
 	}
 
+	function pending_insert($data)
+	{
+		if($this->db->insert('pending_'.$this->table,$data))
+			return TRUE;
+		else
+			return FALSE;
+	}
+
 	function get_all_student_id()
 	{
 		$query = $this->db->select('admn_no')->order_by('admn_no')->get($this->table);
@@ -48,9 +56,28 @@ Class Student_details_model extends CI_Model
 			return FALSE;
 	}
 
+	function get_pending_student_details_by_id($stu_id = '')
+	{
+		if($stu_id != '')
+		{
+			$query = $this->db->where('admn_no="'.$stu_id.'"','',FALSE)->get('pending_'.$this->table);
+			if($query->num_rows() === 1)
+				return $query->row();
+			else
+				return FALSE;
+		}
+		else
+			return FALSE;
+	}
+
 	function update_by_id($data,$id)
 	{
 		$this->db->update($this->table,$data,array('admn_no'=>$id));
+	}
+
+	function deletePendingDetailsWhere($data)
+	{
+		$this->db->delete('pending_'.$this->table,$data);
 	}
 }
 

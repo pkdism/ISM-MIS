@@ -40,7 +40,7 @@
 			for ($k=0; $k<10; $k++)
 				$date .= $publications[$i]['begin_date'][$k];
 			$str[$type] .= "Published in the ".$publications[$i]['name'].", Vol. ";
-			$str[$type] .= $publications[$i]['vol_no']." in issue ";
+			$str[$type] .= $publications[$i]['vol_no'].", No. ";
 			$str[$type] .= $publications[$i]['issue_no'].", ".$date.", ";
 			$str[$type] .= "pp ".$publications[$i]['page_no'].".";
 		}

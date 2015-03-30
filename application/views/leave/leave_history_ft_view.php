@@ -1,5 +1,8 @@
 
 <?php
+/*
+ * Author :- Nishant Raj
+ */
     $ui =  new UI();    
     
     $column2 = $ui->col()->width(12)->open();
@@ -21,14 +24,14 @@
             </tr>
             <tr>
                 <td>Restricted Leave</td>
-                <td><?php echo $Resticted_balance ; ?></td>
+                <td><?php echo $Restricted_balance; ?></td>
             </tr>
                           
 <?php   
         $table->close();
         $box->close();
-        ?>
-        <?php
+?>
+<?php
         $tabBox1 = $ui->tabBox()
                     ->title('Leave Details')
                     ->tab("casual_leave", "Casual Leave", true)

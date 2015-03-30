@@ -5,7 +5,7 @@ class Menu extends MY_Controller
 
 	function __construct()
 	{
-		parent::__construct(array('emp','deo'));
+		parent::__construct(array('emp','est_da1'));
 	}
 
 	public function index()

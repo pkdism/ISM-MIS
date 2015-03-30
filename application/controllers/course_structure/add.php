@@ -30,6 +30,10 @@ class Add extends MY_Controller
 		$session= $this->input->post('session');
 		$sem=$this->input->post('sem');
 		
+		//if course selected is honour,minor or common then dont show the count for elective field.
+		if($course == "honour" || $course == "minor" || $course == "comm")
+			$data['CS_session']['ele_count'] = 0;
+			
 		$aggr_id= $course.'_'.$branch.'_'.$session;
 		//if($dept == 0 || $course == 0 || $branch == 0 || $session == 0 || $sem == 0)
 		//{
@@ -67,8 +71,10 @@ class Add extends MY_Controller
 		$data["CS_session"]['course_name']=$row_course[0]->name;
 		$data["CS_session"]['branch']=$row_branch[0]->name;
 		$data["CS_session"]['session']=$session;
-		$this->session->set_userdata($data);
 		
+		
+		
+		$this->session->set_userdata($data);
 		$this->drawHeader("Enter the number of core and elective subjects");
 		$this->load->view('course_structure/count',$data);
 		$this->drawFooter();

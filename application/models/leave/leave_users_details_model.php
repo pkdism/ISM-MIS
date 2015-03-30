@@ -1,26 +1,50 @@
 <?php
 
+/*
+ * Author :- Nishant Raj
+ */
 class Leave_users_details_model extends CI_Model {
 
-	function __construct() {
-		parent::__construct();
-	}
+    function __construct() {
+            parent::__construct();
+    }
 
-	function get_users_under_hod($emp_id) {
+    function get_designation_by_department_id ($dept_id)
+    {
+        $query = $this->db->query("SELECT DISTINCT designations.id, designations.name FROM designations INNER JOIN user_details INNER JOIN emp_basic_details ON designations.id = emp_basic_details.designation AND user_details.id = emp_basic_details.id where dept_id = '".$dept_id."' ORDER BY designations.name;");
+        if($query->num_rows() > 0)
+                return $query->result();
+        else
+                return FALSE;	 
+    }
+    
+    function get_emp_name ($designation, $dept)
+    {
+        $query = $this->db->query ("SELECT emp_basic_details.id AS id from user_details INNER JOIN emp_basic_details ON user_details.id = emp_basic_details.id where dept_id = '".$dept."' and designation = '".$designation."' ORDER BY salutation, first_name, middle_name, last_name;");
+        if($query->num_rows() > 0)
+                return $query->result();
+        else
+                return FALSE;	 
+    }
+    
+    function get_users_under_hod($emp_id) {
 
-		$sql = "SELECT * FROM  user_details WHERE id = '$emp_id'";
+            $sql = "SELECT * FROM  user_details WHERE id = '$emp_id'";
 
-		$result = $this->db->query($sql)->result_array();
+            $result = $this->db->query($sql)->result_array();
 
-		$dept_id ="";
-		foreach($result as $row) {
-                    $dept_id = $row['dept_id'];
-                }
+            $dept_id ="";
+            foreach($result as $row) {
+                $dept_id = $row['dept_id'];
+            }
 
-		$sql = "SELECT * FROM user_details WHERE dept_id = '$dept_id' ORDER BY first_name";
+            $sql = "SELECT * FROM "
+                    . "user_details as ud JOIN emp_basic_details as ebd "
+                    . "ON ud.id = ebd.id "
+                    . "WHERE ud.dept_id = '$dept_id' ORDER BY first_name";
 
-		return $this->db->query($sql)->result_array();
-	}
+            return $this->db->query($sql)->result_array();
+    }
 
     function get_latest_auth_id($leave_id) {
         $sql = "SELECT emp_id FROM leave_status WHERE id = $leave_id "
@@ -52,15 +76,27 @@ class Leave_users_details_model extends CI_Model {
 //            $data['approving_user_id'] = $approving_user_id;
         
         // Currently only for departments;
-
-        if($user_auth_type == 'dsw'){
-
-            $data['auth_id'] = "dt";
+        
+        if($this->is_this_auth_valid($user_id, 'dsw') ||
+                $this->is_this_auth_valid($user_id, 'est_ar') ||
+                $this->is_this_auth_valid($user_id , 'exam_dr') ||
+                $this->is_this_auth_valid($user_id, 'fictp') ||
+                $this->is_this_auth_valid($user_id, 'hod')){
             
-            $data['user_id'] = $this->get_director_user_id();
+            if($approving_user_id == $user_id){
 
-            return $data;
+                $data['auth_id'] = "dt";
+
+                $data['user_id'] = $this->get_director_user_id();
+
+                return $data;
+            }
+            else if($this->is_director($approving_user_id)){
+                return NULL;
+            }
         }
+        
+        
         if($approving_user_id == $user_id  && !$this->is_hod($user_id)){
             
             $user_dept = $this->get_user_dept($user_id);
@@ -84,7 +120,7 @@ class Leave_users_details_model extends CI_Model {
         
         $user_designation = $this->get_user_designation($user_id);
         
-        if( $user_designation == "astprof" && $this->is_hod($user_id)){
+        if( $user_designation == "astprof" && !$this->is_hod($user_id)){
             
             if($leave_period <= 10.0){
                 return NULL;
@@ -101,7 +137,7 @@ class Leave_users_details_model extends CI_Model {
         }
         
         else if(($user_designation == "ascprof" || $user_designation == "prof")
-                && $this->is_hod($user_id)){
+                && !$this->is_hod($user_id)){
             
             
             //Here return should be Dean(F & P) , Know id of Dean(F & P)
@@ -130,6 +166,8 @@ class Leave_users_details_model extends CI_Model {
         else
             return false;
     }
+    
+    
     function get_user_auth_type($emp_id){
         
         $sql = "SELECT auth_id FROM user_auth_types"
@@ -137,9 +175,7 @@ class Leave_users_details_model extends CI_Model {
         
         $result = $this->db->query($sql)->result_array();
         
-        foreach($result as $row){
-            return $row['auth_id'];
-        }
+        return $result;
     }
     
     function get_user_dept($user_id){
@@ -202,6 +238,113 @@ class Leave_users_details_model extends CI_Model {
         foreach($result as $row){
             
             return $row['id'];
+        }
+    }
+    
+    function is_dept_academic($dept_id){
+        
+        $sql = "SELECT type FROM departments"
+                . "WHERE id = $dept_id";
+        
+        $result = $this->db->query($sql)->result_array();
+        
+        foreach($result as $row){
+            if($row['type'] == 'academic'){
+                return TRUE;
+            }
+        }
+        return FALSE;
+    }
+    
+    function is_faculty($emp_id){
+        
+        $sql = "SELECT auth_id FROM emp_basic_details "
+                . "WHERE id = $emp_id";
+        
+        $result = $this->db->query($sql)->result_array();
+        
+        foreach($result as $row){
+            if($row['auth_id'] == 'ft'){
+                return TRUE;
+            }
+        }
+        return FALSE;
+    }
+    
+//    function is_assistanceRegistar($emp_id){
+//        
+//        $result = $this->get_user_auth_type($emp_id);
+//        
+//        foreach($result as $row){
+//            
+//            if($row->auth_id == 'est_ar'){
+//                return TRUE;
+//            }
+//        }
+//        return FALSE;
+//    }
+//    
+//    function is_dean_faculty_traning($emp_id){
+//        
+//        $result = $this->get_user_auth_type($emp_id);
+//        
+//        foreach($result as $row){
+//            
+//            if($row->auth_id == 'fictp'){
+//                return TRUE;
+//            }
+//        }
+//        return FALSE;
+//    }
+    
+    function is_this_auth_valid($emp_id , $auth_id){
+        
+        $result = $this->get_user_auth_type($emp_id);
+        
+        foreach ($result as $row){
+            
+            if($row['auth_id'] === $auth_id){
+                return TRUE;
+            }
+        }
+        return FALSE;
+    }
+//    
+//    function is_director($emp_id){
+//        
+//        $result = $this->get_user_auth_type($emp_id);
+//        
+//        foreach ($result as $row){
+//            
+//            if($row->auth_id == 'dir'){
+//                return TRUE;
+//            }
+//        }
+//        return FALSE;
+//    }
+
+    function get_next_higher_authorizing_emp($emp_id){
+        
+        $dept = $this->get_user_dept($emp_id);
+        if($this->is_this_auth_valid($emp_id, 'est_ar') || $this->is_this_auth_valid($emp_id, 'fictp') ||
+                $this->is_hod($emp_id)){
+            
+            $data['user_id'] = $this->get_director_user_id();
+            $data['auth_id'] = 'dir';
+            
+            return $data;
+        }
+        
+        
+        if($this->is_dept_academic($dept)){
+            
+            $data['user_id'] = $this->get_dept_head($dept);
+            $data['auth_id'] = 'hod';
+        }
+        else{
+            
+            //1.Who  is sectional head ;
+            return NULL;
         }
     }
 }

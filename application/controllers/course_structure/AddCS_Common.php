@@ -62,6 +62,9 @@ class AddCS_Common extends MY_Controller
 		$data["CS_session"]['course_name']=$row_course[0]->name;
 		$data["CS_session"]['branch']=$row_branch[0]->name;
 		$data["CS_session"]['session']=$session;
+		
+		$data['CS_session']['ele_count'] = 0;
+		
 		$this->session->set_userdata($data);
 		
 		$this->drawHeader("Enter the number of core and elective subjects");

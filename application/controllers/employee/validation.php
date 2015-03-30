@@ -4,7 +4,7 @@ class Validation extends MY_Controller
 {
 	function __construct()
 	{
-		parent::__construct(array('est_ar','deo'));
+		parent::__construct(array('est_ar','est_da1'));
 	}
 
 	public function index()
@@ -282,7 +282,7 @@ class Validation extends MY_Controller
 			$deo = $this->deo_modules_model->getDeoByModuleId('employee');
 			foreach($deo as $row)
 			{
-				$this->notification->notify($row->id,'deo', "Validation Request Rejected", "Validation request for employee ".$emp_id." ".$msg." have been rejected.", "employee/validation","error");
+				$this->notification->notify($row->id,'est_da1', "Validation Request Rejected", "Validation request for employee ".$emp_id." ".$msg." have been rejected.", "employee/validation","error");
 			}
 		}
 

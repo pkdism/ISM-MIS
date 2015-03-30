@@ -4,7 +4,7 @@ class Add extends MY_Controller
 {
 	function __construct()
 	{
-		parent::__construct(array('deo'));
+		parent::__construct(array('est_da1'));
 	}
 
 	public function index($error='')

@@ -53,7 +53,7 @@
 		    ->name('circular_no')
 		    ->required()
 		    ->width(6)
-		    ->placeholder('Enter Circular Number  (Ex: CSE_10185)')
+		    ->placeholder('Enter Circular Number  (Ex: CSE_CIRC_10185)')
 		    ->show();
 
 	$inputRow1->close();

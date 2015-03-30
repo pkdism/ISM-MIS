@@ -16,6 +16,7 @@ class Leave_constants {
     static $PENDING = 2;
     static $CANCELED = 3;
     static $WAITING_CANCELLATION = 4;
+    static $FORWARDED = 5;
     
     // tables of leaves
     static $TABLE_LEAVE_BASIC_INFO = 'leave_basic_info';
@@ -25,7 +26,8 @@ class Leave_constants {
     static $TABLE_USER_DETAILS = 'user_details';
     static $TABLE_RESTRICTED_HOLIDAYS = 'restricted_holidays';
     static $TABLE_VACATION_DATES = 'vacation_dates';
-    
+    static $TABLE_STATION_LEAVE = 'leave_station_details';
+    static $TABLE_STATION_LEAVE_STATUS = 'leave_station_status';
     // max, min vals of leaves
     static $MAX_CASUAL_LEAVES = 8;
     static $MAX_RESTRICTED_LEAVE = 2;

@@ -4,7 +4,7 @@ class Student_add_deo extends MY_Controller
 {
 	function __construct()
 	{
-		parent::__construct(array('deo'));
+		parent::__construct(array('deos'));
 	}
 
 	public function index($error='')
@@ -72,11 +72,11 @@ class Student_add_deo extends MY_Controller
 		$depts = $data['academic_departments'];
 
 		//var_dump($depts[0]->id);
-		$data['courses']=$this->basic_model->get_course_offered_by_dept($depts[0]->id);
+		$data['courses']=$this->basic_model->get_course_offered_by_dept_for_student_reg($depts[0]->id);
 
 		$course = $data['courses'];
 		if($course)
-			$data['branches'] = $this->basic_model->get_branches_by_course_and_dept($courses[0]->id,$depts[0]->id);
+			$data['branches'] = $this->basic_model->get_branches_by_course_and_dept_for_student_reg($course[0]->id,$depts[0]->id);
 		else
 		{
 			$data['courses'] = FALSE;
@@ -239,12 +239,12 @@ class Student_add_deo extends MY_Controller
 
 			if($this->input->post('depends_on'))
 			{
-				$father_name = 'na';
-				$mother_name = 'na';
-				$father_occupation = 'na';
-				$mother_occupation = 'na';
-				$father_income = '0';
-				$mother_income = '0';
+				$father_name = '';
+				$mother_name = '';
+				$father_occupation = '';
+				$mother_occupation = '';
+				$father_income = '';
+				$mother_income = '';
 				$guardian_name = ucwords(strtolower($this->authorization->strclean($this->input->post('guardian_name'))));
 				$guardian_relation = ucwords(strtolower($this->authorization->strclean($this->input->post('guardian_relation_name'))));
 			}
@@ -256,8 +256,8 @@ class Student_add_deo extends MY_Controller
 				$mother_occupation = ucwords(strtolower($this->authorization->strclean($this->input->post('mother_occupation'))));
 				$father_income = $this->input->post('father_gross_income');
 				$mother_income = $this->input->post('mother_gross_income');
-				$guardian_name = 'na';
-				$guardian_relation = 'na';
+				$guardian_name = '';
+				$guardian_relation = '';
 			}
 
 			$user_other_details = array(
@@ -441,7 +441,7 @@ class Student_add_deo extends MY_Controller
 						'pincode' => $this->input->post('pincode3') ,
 						'country' => strtolower($this->authorization->strclean($this->input->post('country3'))) ,
 						'contact_no' => $this->input->post('contact3') ,
-						'type' => 'correspondance'
+						'type' => 'correspondence'
 					)
 				);
 				/*var_dump($user_address);
@@ -489,6 +489,18 @@ class Student_add_deo extends MY_Controller
 				$i++;
 			}
 
+			$stu_status = array(
+				'id' => $stu_id,
+				'created_on' => $date,
+				'details_verified_on' => $date,
+				'status' => 'created'
+			);
+
+			$stu_details_to_approve = array(
+				'id' => $stu_id,
+				'details' => 'All details required to be Approved'
+			);
+
 			$this->load->model('user/users_model','',TRUE);
 			$this->load->model('user/user_details_model','',TRUE);
 			$this->load->model('user/user_other_details_model','',TRUE);
@@ -498,29 +510,51 @@ class Student_add_deo extends MY_Controller
 			$this->load->model('student/student_fee_details_model','',TRUE);
 			$this->load->model('student/student_academic_model','',TRUE);
 			$this->load->model('student/student_education_details_model','',TRUE);
+			$this->load->model('student/student_status_details_model','',TRUE);
+			$this->load->model('user/user_auth_types_model','',TRUE);
+			$this->load->model('student/student_details_to_approve','',TRUE);
 			//$this->load->model('student/student_current_entry_model','',TRUE);
 			//$this->load->model('student/Student_type_model','',TRUE);
 			//$this->load->model('student/Student_new_student_type','',TRUE);
 
+			$res = $this->user_auth_types_model->getUserIdByAuthId('acd_ar');
+
 			$this->db->trans_start();
 
 			$this->users_model->insert($users);
+			$this->user_details_model->insertPendingDetails($user_details);
+			$this->user_other_details_model->insertPendingDetails($user_other_details);
+			$this->user_address_model->insertPendingDetails($user_address);
+			if(!$this->student_academic_model->pending_insert($stu_academic))
+				$this->session->set_flashdata('flashError','Student '.$stu_id.' failed in table stu_academic_model.');
+			if(!$this->student_details_model->pending_insert($stu_details))
+				$this->session->set_flashdata('flashError','Student '.$stu_id.' failed in table stu_details.');
+			if(!$this->student_other_details_model->pending_insert($stu_other_details))
+				$this->session->set_flashdata('flashError','Student '.$stu_id.' failed in table stu_other_details.');
+			if(!$this->student_fee_details_model->pending_insert($stu_fee_details))
+				$this->session->set_flashdata('flashError','Student '.$stu_id.' failed in table stu_fee_details.');
+			//$this->student_current_entry_model->insert($stu_current_entry);
+			if(!$this->student_education_details_model->pending_insert_batch($stu_education_details))
+				$this->session->set_flashdata('flashError','Student '.$stu_id.' failed in table stu_education_details.');
+			if(!$this->student_status_details_model->insert($stu_status))
+				$this->session->set_flashdata('flashError','Student '.$stu_id.' failed in table stu_id_status_details.');
+			if(!$this->student_details_to_approve->insert($stu_details_to_approve))
+				$this->session->set_flashdata('flashError','Student '.$stu_id.' failed in table stu_details_to_approve.');
+			//$this->Student_type_model->insert($stu_type);
+			//$this->Student_new_student_type->update();
+			
 			$this->user_details_model->insert($user_details);
 			$this->user_other_details_model->insert($user_other_details);
 			$this->user_address_model->insert_batch($user_address);
-			if(!$this->student_academic_model->insert($stu_academic))
-				$this->session->set_flashdata('flashError','Student '.$stu_id.' failed in table stu_academic_model.');
-			if(!$this->student_details_model->insert($stu_details))
-				$this->session->set_flashdata('flashError','Student '.$stu_id.' failed in table stu_details.');
-			if(!$this->student_other_details_model->insert($stu_other_details))
-				$this->session->set_flashdata('flashError','Student '.$stu_id.' failed in table stu_other_details.');
-			if(!$this->student_fee_details_model->insert($stu_fee_details))
-				$this->session->set_flashdata('flashError','Student '.$stu_id.' failed in table stu_fee_details.');
-			//$this->student_current_entry_model->insert($stu_current_entry);
-			if(!$this->student_education_details_model->insert_batch($stu_education_details))
-				$this->session->set_flashdata('flashError','Student '.$stu_id.' failed in table stu_education_details.');
-			//$this->Student_type_model->insert($stu_type);
-			//$this->Student_new_student_type->update();
+			$this->student_academic_model->insert($stu_academic);
+			$this->student_details_model->insert($stu_details);
+			$this->student_other_details_model->insert($stu_other_details);
+			$this->student_fee_details_model->insert($stu_fee_details);
+			$this->student_education_details_model->insert_batch($stu_education_details);
+
+			//notify nodal officer
+			foreach($res as $row)
+				$this->notification->notify($row->id, 'acd_ar', "Validation Request", "Please validate ".$stu_id." details", "student/student_validate/validation/".$stu_id);
 
 			$this->db->trans_complete();
 
@@ -608,13 +642,6 @@ class Student_add_deo extends MY_Controller
 	       	$this->index('ERROR: File Name not set.');
 			return FALSE;
 	    }
-
-	    //dont upload files with no file name
-		/*for($i=0 ; $i < $n_family ; $i++)
-			if($_FILES[$name]["name"][$i] == '')
-			{
-				unset($_FILES[$name]["name"][$i]);
-			}*/
 
 		$config['file_name'] = $filename;
 

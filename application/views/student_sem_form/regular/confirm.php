@@ -151,7 +151,42 @@
 				</div>
 			</div>
 			<?php } ?>
-            <!-- Carry Over -->
+			<!-- Honour minor Subject Section-->
+			<?php if(!empty($HM)){ ?>
+			<div class="box box-primary">
+				<div class="box-header">
+				<h3 class="box-title">Elective Subject Register for Current Semester</h3>
+				</div>
+				<div class="box-body">
+				<div class="row">
+				<div class="col-md-12">
+						<table class="table table-hover" >
+							<thead>
+							<tr>
+                            <th>Serial Number</th>
+							<th>Subject Code</th>
+							<th>Subject Name</th>
+							</tr>
+							</thead>
+							<tbody>
+								
+                                <!-- Elective -->
+                                 <?php $i=1; foreach($HM as $e){?> 
+                                  <tr>
+                                    <td data-field="subjectseq"><?php echo $i; ?></td>
+                                      <td data-field="subjectseq"><?php echo $e['subject_id']; ?></td>
+                                    <td data-field="subjectseq"><?php echo $e['name']; ?></td>
+                                  </tr>
+                                  <?php $i++; } ?>
+                                
+							</tbody>
+						</table>							
+					</div>
+				</div>	
+				</div>
+			</div>
+			<?php } ?>
+             <!-- Carry Over -->
             <? if(is_array($carryover)){?>
             <div class="box box-warning">
             <div class="box-header">
@@ -196,15 +231,15 @@
                 <div class="col-sm-6">
                 <div class="form-group">
                 	<label>Date of Payment</label>
-                    <input type="text" class="form-control" disabled="disabled" value="<?php echo $carryover[0]['fee_date'] ?>" />
+                    <input type="text" disabled="disabled" class="form-control" value="<?php echo $carryover[0]['fee_date'] ?>" />
                 </div>
                 <div class="form-group">
                 	<label>Amount Paid</label>
-                    <input type="text" class="form-control" disabled="disabled" value="<?php echo $carryover[0]['fee_amt'] ?>" />
+                    <input type="text" disabled="disabled" class="form-control" value="<?php echo $carryover[0]['fee_amt'] ?>" />
                 </div>
                 <div class="form-group">
                 	<label>Transaction id / Reference No.</label>
-                    <input type="text" class="form-control" disabled="disabled" value="<?php echo $carryover[0]['trans_id'] ?>" />
+                    <input type="text" disabled="disabled" class="form-control" value="<?php echo $carryover[0]['trans_id'] ?>" />
                 </div>
                 </div>
                 <div class="col-sm-6">
@@ -259,7 +294,7 @@
 	</div>
 	
 </div>
-<?php //print_r($carryover); ?>
+<?php // print_r($carryover); ?>
 	<script type="text/javascript">
     $(document).ready(function(){
     $('#back').click(function(){

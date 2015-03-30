@@ -73,7 +73,51 @@
           </tbody>
           </table>
           </div>
+          <div class="col-xs-12">
+				<h2 class="page-header"><i class="fa fa-user"></i> Subject Selected for Honour & Minor Current Semester </h2>
+        	</div>
+        	<div class="col-xs-12 table-responsive">
+          <table class="table table-striped">
+          <thead>
+              <th>Sl N.</th>
+              <th>SUbject Code</th>
+              <th>SUbject Name</th>
+          </thead>
+          <tbody>
+          <?php $i=1; foreach($confirm['HM'] as $s) { ?>
+      <tr>
+        <td><?php echo $i; ?></td>
+        <td><?php echo $s['subject_id']; ?></td>
+        <td><?php echo $s['name']; ?></td>
+      </tr>
+      <?php $i++; } ?>
+          </tbody>
+          </table>
           </div>
+          </div>
+           <!-- Change Branch -->
+        
+         <?php if(($student[0]->semester+1) == 3 && is_array($CB)){ ?>
+          
+         			<div class="row">
+         			<div class="col-sm-12">
+         			<div class="page-header">Change Branch</div>
+         			</div>
+         			<div class="col-sm-12">
+         			<p>Selected for change</p>
+	         			<div class="row">
+	         				<div class="col-sm-3"><b>Department : </b> <?php echo $this->sbasic_model->getDepatmentById($CB[0]['department'])->name; 
+					?></div>
+	         				<div class="col-sm-3"><b>Course : </b> <?php echo $this->sbasic_model->getCourseById($CB[0]['course'])->name; ?></div>
+	         				<div class="col-sm-3"><b>Branch : </b> <?php echo $this->sbasic_model->getBranchById($CB[0]['branch'])->name; ?></div>
+	         				<div class="col-sm-3">
+	         				<label>Select</label>
+	         				<?php echo form_dropdown('CBS',array(''=>'--Select--','Y'=>'Yes He/She Can Change The Branch','N'=>'No He/She Can Not Change The'))?>
+	         				</div>
+	         			</div>
+         			</div>
+         			</div>
+         <?php } ?>
           <!-- Carry Over -->
             <? if(is_array($carryover)){?>
             <div class="box box-warning">
@@ -184,17 +228,24 @@
       	 <div class="col-sm-6" style="background:#F4F4F4;">Approve:
                <div class="btn-group" data-toggle="buttons-radio">
            <button type="button" id='ap'  class="btn btn-primary">Approve</button>
-           <button type="button" id='rej' class="btn btn-warning">Reject</button>
+           <button type="button" id='rej' class="btn btn-warning">Modify</button>
            <input type='hidden' id="rf" name="hods" value='0'>
         </div>
         <?php echo form_textarea(array('name'=>'hodRemark','id'=>'re','style'=>"height:60px; width:200px;",'value'=>"")); ?>
          </div>
         
         		
-                <div class="col-sm-6" >
+                <div class="col-sm-6" >           
                		 <?php
 						echo form_hidden('formId',$student[0]->sem_form_id);
 						echo form_hidden('stuId',$student[0]->admn_no);
+
+						if(($student[0]->semester+1) == 3 && is_array($CB)){
+							
+						echo form_hidden('dept',$CB[0]['department']);
+						echo form_hidden('course',$CB[0]['course']);
+						echo form_hidden('branch',$CB[0]['brach']);
+						}
 						echo form_submit('submit','Submit','class="btn btn-primary" '); ?>
                 </div>
                <?php echo form_close(); ?>

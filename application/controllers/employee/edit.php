@@ -4,12 +4,12 @@ class Edit extends MY_Controller
 {
 	function __construct()
 	{
-		parent::__construct(array('emp','deo'));
+		parent::__construct(array('emp','est_da1'));
 	}
 
 	public function index()
 	{
-		if($this->authorization->is_auth('deo'))
+		if($this->authorization->is_auth('est_da1'))
 		{
 			$this->addJS("employee/edit_employee_script.js");
 
@@ -58,7 +58,7 @@ class Edit extends MY_Controller
 
 	public function edit_form()
 	{
-		if(!$this->authorization->is_auth('deo'))
+		if(!$this->authorization->is_auth('est_da1'))
 		{
 			$this->session->set_flashdata('flashError','You are not authorized.');
 			redirect('home');

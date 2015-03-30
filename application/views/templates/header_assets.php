@@ -18,6 +18,7 @@
         <link href="<?= base_url() ?>assets/core/adminLTE/css/AdminLTE.css" rel="stylesheet" type="text/css" />
         <link href="<?= base_url() ?>assets/core/adminLTE/css/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
     	<link href="<?= base_url() ?>assets/core/adminLTE/css/datepicker/datepicker3.css" rel="stylesheet" type="text/css">
+    	<link href="<?= base_url() ?>assets/core/adminLTE/css/timepicker/bootstrap-timepicker.css" rel="stylesheet" type="text/css">
         <link href="<?= base_url() ?>assets/core/img_upload/upload_image.css" rel="stylesheet" type="text/css" />
         <link href="<?= base_url() ?>assets/core/adminLTE/css/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css">
         <link href="<?= base_url() ?>assets/core/adminLTE/css/ionslider/ion.rangeSlider.css" rel="stylesheet" type="text/css">
@@ -37,6 +38,7 @@
         <script src="<?= base_url() ?>assets/core/jquery-ui.min.js" type="text/javascript"></script>
         <script src="<?= base_url() ?>assets/core/bootstrap-3.3.2/dist/js/bootstrap.min.js" type="text/javascript"></script>
 		<script src="<?= base_url() ?>assets/core/adminLTE/js/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
+		<script src="<?= base_url() ?>assets/core/adminLTE/js/plugins/timepicker/bootstrap-timepicker.js" type="text/javascript"></script>
         <script src="<?= base_url() ?>assets/core/adminLTE/js/AdminLTE/app.js" type="text/javascript"></script>
 		<script src="<?= base_url() ?>assets/core/adminLTE/js/plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
 		<script src="<?= base_url() ?>assets/core/adminLTE/js/plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>

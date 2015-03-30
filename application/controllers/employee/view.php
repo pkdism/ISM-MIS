@@ -4,12 +4,12 @@ class View extends MY_Controller
 {
 	function __construct()
 	{
-		parent::__construct(array('emp','deo','est_ar'));
+		parent::__construct(array('emp','est_da1','est_ar'));
 	}
 
 	public function index($form_no = 5, $emp_id = '')
 	{
-		if($this->authorization->is_auth('deo'))
+		if($this->authorization->is_auth('est_da1'))
 		{
 			$this->addJS('employee/edit_employee_script.js');
 
@@ -38,7 +38,7 @@ class View extends MY_Controller
 
 	function view_form()
 	{
-		if(!$this->authorization->is_auth('deo'))
+		if(!$this->authorization->is_auth('est_da1'))
 		{
 			$this->session->set_flashdata('flashError','You are not authorized.');
 			redirect('home');

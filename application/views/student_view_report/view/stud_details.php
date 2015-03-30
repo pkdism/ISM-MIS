@@ -348,7 +348,10 @@ echo '<div id="print" >';
 									$col3->close();
 									
 									$col4 = $ui->col()->width(3)->open();
-										echo $student_details->parent_landline_no;
+										if($student_details->parent_landline_no != '0')
+											echo $student_details->parent_landline_no;
+										else
+											echo '';
 									$col4->close();
 									
 								$stuRow8->close();
@@ -584,7 +587,10 @@ echo '<div id="print" >';
 							$col3->close();
 							
 							$col4 = $ui->col()->width(3)->open();
-								echo $student_academic->semester;
+								if($student_academic->semester != '-1')
+									echo $student_academic->semester;
+								else
+									echo 'NA';
 							$col4->close();
 							
 							
@@ -605,7 +611,10 @@ echo '<div id="print" >';
 							$col3->close();
 							
 							$col4 = $ui->col()->width(3)->open();
-								echo $this->get_cb->getCB($user_details->dept_id)->course_name;
+								if($student_academic->course_id = 'na')
+									echo 'NA';
+								else
+									echo $student_academic->course_id;
 							$col4->close();
 						$stuRowdept->close();
 						
@@ -619,7 +628,10 @@ echo '<div id="print" >';
 							$col3->close();
 							
 							$col4 = $ui->col()->width(3)->open();
-								echo $this->get_cb->getCB($user_details->dept_id)->branch_name;
+								if($student_academic->branch_id == 'na')
+									echo 'NA';
+								else
+									echo $student_academic->branch_id;
 							$col4->close();
 							
 						$stuRowcourse->close();
@@ -704,7 +716,10 @@ echo '<div id="print" >';
 									$col3->close();
 									
 									$col4 = $ui->col()->width(3)->open();
-									echo $student_fee_details->fee_amount;
+										if($student_fee_details->fee_amount == '0')
+											echo '';
+										else
+											echo $student_fee_details->fee_amount;
 									$col4->close();
 									
 								$stuRowdd->close();
@@ -756,7 +771,10 @@ echo '<div id="print" >';
 									$col3->close();
 									
 									$col4 = $ui->col()->width(3)->open();
-									echo $student_details->alternate_mobile_no;
+										if($student_details->alternate_mobile_no != '0')
+											echo $student_details->alternate_mobile_no;
+										else
+											echo '';
 									$col4->close();
 									
 								$stuRowmobile->close();

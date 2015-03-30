@@ -796,6 +796,8 @@ $formRow = $ui->row()->open();
 			$ui->imagePicker()->label("An image picker")->show();	
 			
 			$ui->datePicker()->label("A date picker")->show();	
+			
+			$ui->timePicker()->label("A time picker")->show();
 
 			$ui->slider()
 				->id('slider2')
@@ -930,6 +932,19 @@ $ui->input()
 			 ->uiType("success")
 			 ->id("dpAddon")
 			 ->value("01-05-2014")
+			 ->show();
+			 
+		  $ui->timePicker()
+			 ->label("Time with left icon addon, right button addon")
+			 ->addonLeft($ui->icon("clock-o"))
+			 ->addonRight($ui->button()->value("Choose")->uiType("success"))
+			 ->uiType("success")
+			 ->id("tpAddon")
+			 ->value("11:49 AM")	//same as defaultTime("11:49 AM")
+			 ->showMeridian('true')
+			 ->showSeconds('true')
+			 ->secondStep(10)
+			 ->minuteStep(2)
 			 ->show();
 
 		$box->close();

@@ -22,9 +22,9 @@ class Student_sem_form_menu_model extends CI_Model
 		$menu['hod']["Semester Approved"]["Semester Form"] = site_url('student_sem_form/regular_check');
 		}
 		//auth ==> deo
-		$menu['deo']=array();
-		$menu['deo']["Semester date"]["Set Semester Reg.Date"] = site_url('student_sem_form/date');
-		$menu['deo']["Semester Approved"]["Semester Form"] = site_url('student_sem_form/regular_check_acdamic');
+		$menu['arac']=array();
+		$menu['arac']["Semester date"]["Set Semester Reg.Date"] = site_url('student_sem_form/date');
+		$menu['arac']["Semester Approved"]["Semester Form"] = site_url('student_sem_form/regular_check_acdamic');
 		
 		return $menu;
 	}

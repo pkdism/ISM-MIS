@@ -2,56 +2,36 @@
 
 /**
  * Author: Majeed Siddiqui (samsidx)
-*/
+ */
 
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
 class Leave_cancel extends MY_Controller {
-    
+
     const LEAVE_TYPE = 'leave_type';
     const NO_DATA = "$";
-    
+
     var $emp_id;
-    
+
     function __construct() {
         parent::__construct(array('emp'));
         $this->emp_id = $this->session->userdata('id');
+        $this->addJS('leave/cancel_query.js');
         $this->load->model('leave/result');
         $this->load->model('leave/leave_constants');
     }
-    
+
     function index() {
-        
+
         // set data to send
         $data = array(
             'is_notification_on' => FALSE
         );
-        
-        // if submit button is pressed
-        if (isset($_POST['submit'])) {
-            $result = $this->validate_input();
-            if (!$result->getResult()) {
-                // if not valid data send user
-                // turn on notification
-                $data['is_notification_on'] = TRUE;
-                $data['errors'] = $result->getErrors();
-            }
-            else {
-                // fetch the leaves
-                $leaves = $this->fetch_leaves($_POST[Leave_cancel::LEAVE_TYPE]);
-                
-                // set leaves
-                $data['leaves'] = $leaves;
-                
-                // set leave type
-                $data['leave_type'] = $_POST[Leave_cancel::LEAVE_TYPE];
-            }
-        }
-        
+
         // if cancel button is pressed
-        else if (isset($_POST['cancel'])) {
+        if (isset($_POST['cancel'])) {
             $result = $this->validate_cancel_input();
             if (!$result->getResult()) {
                 $data['is_notification_on'] = TRUE;
@@ -70,22 +50,22 @@ class Leave_cancel extends MY_Controller {
                 return;
             }
         }
-        
+
         $this->drawHeader('Cancel Leave');
         $this->load->view('leave/leave_cancel_view', $data);
         $this->drawFooter();
     }
-    
+
     function validate_input() {
         $result = new Result();
-        if (!isset($_POST[Leave_cancel::LEAVE_TYPE]) 
-                || $_POST[Leave_cancel::LEAVE_TYPE] == Leave_cancel::NO_DATA) {
+        if (!isset($_POST[Leave_cancel::LEAVE_TYPE])
+            || $_POST[Leave_cancel::LEAVE_TYPE] == Leave_cancel::NO_DATA) {
             $result->setResult(FALSE);
             $result->addError("Please select type of leave");
         }
         return $result;
     }
-    
+
     function validate_cancel_input() {
         $result = new Result();
         if (!isset($_POST['leave_to_cancel']) || empty($_POST['leave_to_cancel'])) {
@@ -94,23 +74,7 @@ class Leave_cancel extends MY_Controller {
         }
         return $result;
     }
-    
-    function fetch_leaves($leave_type) {
-        switch ($leave_type) {
-            
-         // get cancelable casual leaves
-         case Leave_constants::$TYPE_CASUAL_LEAVE:
-             $this->load->model('leave/leave_casual_model', 'cl');
-             return $this->cl->get_cancelable_casual_leaves($this->emp_id);
-             
-        // get cancelable restricted leaves
-         case Leave_constants::$TYPE_RESTRICTED_LEAVE:
-             $this->load->model('leave/leave_restricted_model', 'rm');
-             return $this->rm->get_cancelable_restricted_leaves($this->emp_id);
-        }
-        return NULL;
-    }
-    
+
     function send_notification($leave_id) {
         // now pass leave cancellation request to higher authority
         $this->load->model('leave/leave_users_details_model', 'lud');
@@ -130,12 +94,12 @@ class Leave_cancel extends MY_Controller {
         }
 
         $this->notification->notify(
-                $higher_user_id,
-                $higher_auth_type, 
-                "Leave Cancellation Request", 
-                "You have a leave cancellation request from {$this->session->userdata('name')}",
-                "leave/leave_cancel_permission/cancel_leave_request/{$this->emp_id}/{$leave_id}"
-               );
+            $higher_user_id,
+            $higher_auth_type,
+            "Leave Cancellation Request",
+            "You have a leave cancellation request from {$this->session->userdata('name')}",
+            "leave/leave_cancel_permission/cancel_leave_request/{$this->emp_id}/{$leave_id}"
+        );
     }
 
     function show_confirmation($msg) {

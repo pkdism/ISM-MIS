@@ -15,20 +15,6 @@ class Users_model extends CI_Model
 		$this->db->insert($this->table,$data);
 	}
 
-	function update($data, $where)
-	{
-		$this->db->update($this->table,$data,$where);
-	}
-
-	function getUserById($id = '')
-	{
-		$query = $this->db->get_where($this->table,array('id'=>$id));
-		if($query->num_rows() === 1)
-			return $query->row();
-		else
-			return false;
-	}
-
 	function validate_user($user_id, $password)
 	{
 		$user_id = $this->authorization->strclean($user_id);
@@ -43,7 +29,7 @@ class Users_model extends CI_Model
 				return false;
 			}
 
-			$password = $this->authorization->encode_password($password, $row->created_date);
+            $password = $this->authorization->encode_password($password, $row->created_date);
 			if($password == $row->password)
 			{
 				// Login Successful
@@ -71,6 +57,15 @@ class Users_model extends CI_Model
 			}
 		}
 		return false;
+    }
+
+    function getUserById($id = '')
+    {
+        $query = $this->db->get_where($this->table, array('id' => $id));
+        if ($query->num_rows() === 1)
+            return $query->row();
+        else
+            return false;
     }
 
 	private function set_session($user_id, $password, $data)
@@ -162,6 +157,11 @@ class Users_model extends CI_Model
 			$this->session->set_flashdata('flashError','Old Password do not match.');
 			redirect('change_password');
 		}
+    }
+
+    function update($data, $where)
+    {
+        $this->db->update($this->table, $data, $where);
 	}
 }
 

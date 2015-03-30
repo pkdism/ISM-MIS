@@ -46,7 +46,8 @@ class View extends MY_Controller
 		if(!$this->basic_model->check_if_aggr_id_exist_in_CS($expected_aggr_id))
 		{
 			$result_aggr_id = $this->basic_model->get_latest_aggr_id($course_id,$branch_id,$expected_aggr_id);
-			$aggr_id = $result_aggr_id[0]->aggr_id;	
+			if($result_aggr_id)
+				$aggr_id = $result_aggr_id[0]->aggr_id;	
 		}	
 		else
 			$aggr_id = $expected_aggr_id;
@@ -56,26 +57,36 @@ class View extends MY_Controller
 		if(!$this->basic_model->check_if_aggr_id_exist_in_CS($expected_common_aggr_id))
 		{
 			$result_aggr_id_common = $this->basic_model->get_latest_aggr_id("comm","comm",$expected_common_aggr_id);
-			$aggr_id_common = $result_aggr_id_common[0]->aggr_id;	
+			if($result_aggr_id_common)
+				$aggr_id_common = $result_aggr_id_common[0]->aggr_id;	
+			else 
+				$aggr_id_common = "__";
 		}	
 		else
 			$aggr_id_common = $expected_common_aggr_id;
 		
 		
-		$expected_honour_aggr_id = "honour".'_'."honour".'_'.$session;
+		$expected_honour_aggr_id = "honour".'_'.$branch_id.'_'.$session;
 		if(!$this->basic_model->check_if_aggr_id_exist_in_CS($expected_honour_aggr_id))
 		{
-			$result_aggr_id_honour = $this->basic_model->get_latest_aggr_id("honour","honour",$expected_honour_aggr_id);
-			$aggr_id_honour = $result_aggr_id_honour[0]->aggr_id;	
+			$result_aggr_id_honour = $this->basic_model->get_latest_aggr_id("honour",$branch_id,$expected_honour_aggr_id);
+			if($result_aggr_id_honour)
+				$aggr_id_honour = $result_aggr_id_honour[0]->aggr_id;	
+			else 
+				$aggr_id_honour = "__";
 		}	
 		else
 			$aggr_id_honour = $expected_honour_aggr_id;
 		
-		$expected_minor_aggr_id = "minor".'_'."minor".'_'.$session;
+		
+		$expected_minor_aggr_id = "minor".'_'.$branch_id.'_'.$session;
 		if(!$this->basic_model->check_if_aggr_id_exist_in_CS($expected_minor_aggr_id))
 		{
-			$result_aggr_id_minor = $this->basic_model->get_latest_aggr_id("honour","honour",$expected_minor_aggr_id);
-			$aggr_id_minor = $result_aggr_id_minor[0]->aggr_id;	
+			$result_aggr_id_minor = $this->basic_model->get_latest_aggr_id("minor",$branch_id,$expected_minor_aggr_id);
+			if($result_aggr_id_minor)
+				$aggr_id_minor = $result_aggr_id_minor[0]->aggr_id;	
+			else 
+				$aggr_id_minor = "__";
 		}	
 		else
 			$aggr_id_minor = $expected_minor_aggr_id;
@@ -102,6 +113,7 @@ class View extends MY_Controller
 		
 		
 		//$semester == 0 when All(for all semester) has been selected in view CS. 
+		//if course id == honour then show normal B.Tech + Honour Subjects
 		if($course_id == "honour" || $course_id == "minor")
 		{
 			if($semester == 0)
@@ -200,11 +212,8 @@ class View extends MY_Controller
 				else
 				{
 					//show the honour subjects for B.Tech 5th to 8th semester..
-					if(($k == 5 || $k == 6 || $k == 7 || $k == 8) &&  (($course_id == "honour") || ($course_id !="honour" &&  $row_course[0]
-					->duration == 4)))
+					if(($k == 5 || $k == 6 || $k == 7 || $k == 8) &&  (($course_id == "honour")))
 					{
-						//echo "honour";
-						//die();
 						$counter = $k;
 						$result_ids = $this->basic_model->get_subjects_by_sem($counter,$aggr_id_honour);	
 						$i=1;
@@ -216,11 +225,8 @@ class View extends MY_Controller
 						}
 						$data["subjects"]['honour']["count"][$counter]=$i-1;	
 					}
-					
-					if(($k == 5 || $k == 6 || $k == 7 || $k == 8) && (($course_id == "minor") || ($course_id != "minor" && $row_course[0]->duration
-					== 4)))
+					else if(($k == 5 || $k == 6 || $k == 7 || $k == 8) && (($course_id == "minor")))
 					{
-						
 						$counter = $k;
 						$result_ids = $this->basic_model->get_subjects_by_sem($counter,$aggr_id_minor);	
 						$i=1;
@@ -233,7 +239,7 @@ class View extends MY_Controller
 						$data["subjects"]['minor']["count"][$counter]=$i-1;	
 					}
 					
-					if($course_id != "honour" && $course_id != "minor")
+					else
 					{
 						
 					//show the normal B.Tech subjects

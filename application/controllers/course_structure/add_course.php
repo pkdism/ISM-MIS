@@ -24,7 +24,7 @@ class Add_course extends MY_Controller
 		$course_details['id'] = $this->input->post("course_id");
 		$course_details['id'] = preg_replace($special, "", $course_details['id']);
 		$course_details['id'] = strtolower(trim($course_details['id']));
-		
+		//die($course_details['id']);
 		
 		$course_details['name'] = $this->input->post("course_name");
 		$course_details['duration'] = $this->input->post("course_duration");

@@ -18,7 +18,7 @@ class Leave_history_model extends CI_Model {
             $cl = Leave_constants::$TABLE_CASUAL_LEAVE;
             $sql = "SELECT * FROM $lbi JOIN $cl ON $lbi.id = $cl.id"
             ." WHERE $lbi.emp_id = '$emp_id' "
-            ." and $cl.leave_start_date >= '$start_date' and $cl.leave_end_date <= '$end_date'";
+            ." and $cl.leave_start_date >= '$start_date' and $cl.leave_start_date <= '$end_date'";
 
             return $this->db->query($sql)->result_array();
 	}

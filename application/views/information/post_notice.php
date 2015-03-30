@@ -52,7 +52,7 @@
 		    ->name('notice_no')
 		    ->required()
 		    ->width(6)
-		    ->placeholder('Enter Notice Number  (Ex: CSE_10185)')
+		    ->placeholder('Enter Notice Number  (Ex: CSE_NOTICE_10185)')
 		    ->show();
 
 	$inputRow1->close();

@@ -23,6 +23,7 @@ class UI {
 	function datePicker()	{	return new DatePicker();	}
 	function imagePicker()	{	return new ImagePicker();	}
 	function slider()	{	return new Slider();	}
+	function timePicker()	{	return new TimePicker();	}
 }
 
 
@@ -1287,5 +1288,64 @@ class Slider extends Input {
 				echo '
                 });
 		</script>';
+	}
+}
+
+
+class TimePicker extends Input {
+	var $label = '';
+	var $showMeridian = 'true';
+	var $minuteStep = '1';
+	var $secondStep = '1';
+	var $showSeconds = 'false';
+	var $defaultTime = 'current';
+
+	public function __construct() {
+		parent::__construct();
+		log_message('debug', "UI_helper > TimePicker Class Initialized");
+	}
+
+	function showMeridian($showMeridian = 'true') {
+		$this->showMeridian = $showMeridian;
+		return $this;
+	}
+
+	function minuteStep($minuteStep = '1') {
+		$this->minuteStep = $minuteStep;
+		return $this;
+	}
+
+	function secondStep($secondStep = '1') {
+		$this->secondStep = $secondStep;
+		return $this;
+	}
+
+	function showSeconds($showSeconds = 'false') {
+		$this->showSeconds = $showSeconds;
+		return $this;
+	}
+
+	function defaultTime($defaultTime = 'current') {
+		$this->defaultTime = $defaultTime;
+		return $this;
+	}
+
+	function show() {
+		if($this->properties['value'] != '') {
+			$this->defaultTime = $this->properties['value'];
+		}
+		
+		parent::show();
+		echo '
+		<script>
+			$("#'.$this->properties["id"].'").timepicker({
+				secondStep: '.$this->secondStep.',
+                minuteStep: '.$this->minuteStep.',
+                showSeconds: '.$this->showSeconds.',
+                showMeridian: '.$this->showMeridian.',
+                defaultTime: '."'".$this->defaultTime."'".'
+			});';
+
+        echo '</script>';
 	}
 }

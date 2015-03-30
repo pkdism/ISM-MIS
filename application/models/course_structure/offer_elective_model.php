@@ -3,7 +3,7 @@
 class Offer_elective_model extends CI_Model
 {
 var $table_elective_group = 'elective_group';
-	var $table_elective_offered = 'elective_offered';
+	var $table_optional_offered = 'optional_offered';
 	
 	function __construct()
 	{
@@ -16,28 +16,28 @@ var $table_elective_group = 'elective_group';
 		return $query->result();
 	}
 	
-	function select_elective_offered($aggr_id,$id)
+	function select_elective_offered($aggr_id,$id,$batch)
 	{
-    	$query = $this->db->get_where($this->table_elective_offered,array('aggr_id'=>$aggr_id,'id'=>$id));
+    	$query = $this->db->get_where($this->table_optional_offered,array('aggr_id'=>$aggr_id,'id'=>$id,'batch'=>$batch));
     	if($query->num_rows() > 0)
 			return true;	
 	}
 	function insert_elective_offered($data)
 	{
-    	$this->db->insert($this->table_elective_offered,$data);
+    	$this->db->insert($this->table_optional_offered,$data);
     	return $this->db->_error_message(); 
 	}
 	
-	function select_elective_offered_by_aggr_id($aggr_id,$semester)
+	function select_elective_offered_by_aggr_id($aggr_id,$semester,$batch)
 	{
-		$query = $this->db->query("SELECT * FROM elective_offered INNER JOIN course_structure ON course_structure.id = elective_offered.id WHERE elective_offered.aggr_id = '$aggr_id' AND course_structure.semester = '$semester'");
+		$query = $this->db->query("SELECT * FROM optional_offered INNER JOIN course_structure ON course_structure.id = optional_offered.id WHERE optional_offered.aggr_id = '$aggr_id' AND course_structure.semester = '$semester' AND optional_offered.batch = '$batch'");
 			return $query->result();	
 	}
 	
-	function delete_elective_offered($aggr_id,$semester)
+	function delete_optional_subject_offered($aggr_id,$semester,$batch)
 	{
-		$query = $this->db->query("DELETE ele_off FROM elective_offered ele_off INNER JOIN course_structure ON course_structure.id = ele_off.id
-		WHERE ele_off.aggr_id = '$aggr_id' AND course_structure.semester = '$semester'");
+		$query = $this->db->query("DELETE ele_off FROM optional_offered ele_off INNER JOIN course_structure ON course_structure.id = ele_off.id
+		WHERE ele_off.aggr_id = '$aggr_id' AND course_structure.semester = '$semester' AND ele_off.batch = '$batch'");
 	    
 		if($this->db->affected_rows() >=0 || !$this->db->_error_message())
 			return true;

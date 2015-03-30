@@ -1,7 +1,7 @@
 <?php $ui = new UI(); ?>
     <body class="skin-blue">
 		<div class="center">
-<?
+<?php
 		$errorHead = "Error";
 		$uiType = "error";
 		$errorMessage = "An error occured while logging in. Please try again.";

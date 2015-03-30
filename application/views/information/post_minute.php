@@ -51,7 +51,7 @@
 		    ->name('minutes_no')
 		    ->required()
 		    ->width(6)
-		    ->placeholder('Enter Minutes Number  (Ex: CSE_10185)')
+		    ->placeholder('Enter Minutes Number  (Ex: CSE_MINUTE_10185)')
 		    ->show();
 
 	$inputRow1->close();

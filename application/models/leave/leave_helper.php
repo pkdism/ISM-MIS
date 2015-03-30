@@ -277,5 +277,21 @@ class Leave_helper extends CI_Model {
         
         return $result;
     }
-}
 
+    /**
+    * 1. start date
+    * 2. end date
+    * 3. start time
+    * 4. end time
+    * 5. purpose
+    * 6. addressd
+    */
+
+//    function isValidStationData($data) {
+//        $result = new Result();
+//        // 1. any field should not empty
+//        // 2. validate date fields
+//        
+//        return $result;
+//    }
+}

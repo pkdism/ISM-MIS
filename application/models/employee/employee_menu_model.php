@@ -27,12 +27,12 @@ class Employee_menu_model extends CI_Model
 		$menu['est_ar']["Employee Details"]["Database Queries"]["Get Employee By Designation"]=site_url('employee/queries/queryByDesignation');
 
 		//auth ==> deo
-		$menu['deo']=array();
-		$menu['deo']['Manage Employees']=array();
-		$menu['deo']["Manage Employees"]["Add Employee"] = site_url('employee/add');
-		$menu['deo']["Manage Employees"]["View Employee Details"] = site_url('employee/view');
-		$menu['deo']["Manage Employees"]["Edit Employee Details"] = site_url('employee/edit');
-		$menu['deo']["Manage Employees"]["Validation Requests"] = site_url('employee/validation');
+		$menu['est_da1']=array();
+		$menu['est_da1']['Manage Employees']=array();
+		$menu['est_da1']["Manage Employees"]["Add Employee"] = site_url('employee/add');
+		$menu['est_da1']["Manage Employees"]["View Employee Details"] = site_url('employee/view');
+		$menu['est_da1']["Manage Employees"]["Edit Employee Details"] = site_url('employee/edit');
+		$menu['est_da1']["Manage Employees"]["Validation Requests"] = site_url('employee/validation');
 
 		return $menu;
 	}

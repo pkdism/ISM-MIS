@@ -27,8 +27,7 @@
 			<div class="col-xs-12">
 				<h2 class="page-header"><i class="fa fa-user"></i> GPA &amp; Result all previous Year</h2>
         	</div>
-        </div>
-         <div class="row">
+        
          	<div class="col-xs-12">
              <?php 
 				for($p=1; $p<=(int)$student[0]->semester; $p++){
@@ -42,8 +41,7 @@
 			<div class="col-xs-12">
 				<h2 class="page-header"><i class="fa fa-user"></i> Subject Registered for Current Semester </h2>
         	</div>
-        </div>
-          <div class="row">
+        
           <div class="col-xs-12 table-responsive">
           <table class="table table-striped">
           <thead>
@@ -64,15 +62,58 @@
               </tr>
     	  <?php }} foreach($confirm['ele'] as $s) { ?>
       <tr>
-        <td><?php echo $s['sub_seq']; ?></td>
-        <td><?php echo $s['sub_seq']; ?></td>
+        <td><?php echo $s['sequence']; ?></td>
+        <td><?php echo $s['subject_id']; ?></td>
         <td><?php echo $s['name']; ?></td>
       </tr>
       <?php } ?>
           </tbody>
           </table>
           </div>
+          <div class="col-xs-12">
+				<h2 class="page-header"><i class="fa fa-user"></i> Subject Selected for Honour & Minor Current Semester </h2>
+        	</div>
+        	<div class="col-xs-12 table-responsive">
+          <table class="table table-striped">
+          <thead>
+              <th>Sl N.</th>
+              <th>SUbject Code</th>
+              <th>SUbject Name</th>
+          </thead>
+          <tbody>
+          <?php $i=1; foreach($confirm['HM'] as $s) { ?>
+      <tr>
+        <td><?php echo $i; ?></td>
+        <td><?php echo $s['subject_id']; ?></td>
+        <td><?php echo $s['name']; ?></td>
+      </tr>
+      <?php $i++; } ?>
+          </tbody>
+          </table>
           </div>
+          </div>
+         <!-- Change Branch -->
+        
+         <?php if(($student[0]->semester+1) == 3 && is_array($CB)){ ?>
+          
+         			<div class="row">
+         			<div class="col-sm-12">
+         			<div class="row">
+         				<div class="page-header col-sm-6">Change Branch</div>
+         				<div class="page-header col-sm-6">Status :<?php echo ($CB[0]['status'] == 'P')?'<span class="label label-warning">Pending form Acdamic Side</span>':($CB[0]['status'] == 'Y')?'<span class="label label-success">Branch has Been Changed</span>':'<span class="label label-denger">Branch can not be Changed</span>' ?></div>
+         			</div>
+         			</div>
+         			<div class="col-sm-12">
+         			<p>Selected for change</p>
+	         			<div class="row">
+	         				<div class="col-sm-4"><b>Department : </b> <?php echo $this->sbasic_model->getDepatmentById($CB[0]['department'])->name; 
+					?></div>
+	         				<div class="col-sm-4"><b>Course : </b> <?php echo $this->sbasic_model->getCourseById($CB[0]['course'])->name; ?></div>
+	         				<div class="col-sm-4"><b>Branch : </b> <?php echo $this->sbasic_model->getBranchById($CB[0]['branch'])->name; ?></div>
+	         				</div>
+         			</div>
+         			</div>
+         <?php } ?>
           <!-- Carry Over -->
             <? if(is_array($carryover)){?>
             <div class="box box-warning">
@@ -184,7 +225,7 @@
       	 <div class="col-sm-6" style="background:#F4F4F4;">Approve:
                <div class="btn-group" data-toggle="buttons-radio">
            <button type="button" id='ap'  class="btn btn-primary">Approve</button>
-           <button type="button" id='rej' class="btn btn-warning">Reject</button>
+           <button type="button" id='rej' class="btn btn-warning">Modify</button>
            <input type='hidden' id="rf" name="hods" value='0'>
         </div>
         <?php echo form_textarea(array('name'=>'hodRemark','id'=>'re','style'=>"height:60px; width:200px;",'value'=>"")); ?>

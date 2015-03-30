@@ -10,10 +10,11 @@ if (!defined('BASEPATH')) {
 class Leave_history extends MY_Controller {
 
 	var $emp_id;
-
+    var $data = array();
+        
 	function __construct() {
             parent::__construct(array('emp'));
-//            echo "Hello World";
+
             $this->emp_id = $this->session->userdata('id');
             $this->load->model('leave/leave_basic_info_model', 'bm');
             $this->load->model('leave/leave_casual_model', 'cm');
@@ -22,17 +23,16 @@ class Leave_history extends MY_Controller {
             $this->load->model('leave/result');
             $this->load->model('leave/leave_history_model' , 'lhm');
             $this->load->model('leave/leave_users_details_model' , 'ludm');
-//            echo "Hello World 2";
+        $this->load->model('leave/leave_station_model', 'lsm');
+
 	}
-        
-        var $data = array();
         
         function index(){
 
             $auth_id = $this->lhm->get_user_auth_id($this->emp_id);
 
             
-            if($auth_id == 'hod'){
+            if($this->ludm->is_hod($this->emp_id)){
 
                 $this->data['notif'] = FALSE;
                 $this->data['set'] = FALSE;
@@ -53,7 +53,7 @@ class Leave_history extends MY_Controller {
                     $all_user_under_hod = $this->ludm->get_users_under_hod($this->emp_id);
                     $this->data['user_id'] = $user_id;
                     $this->data['Casual_balance'] = $casual_leave_avail_balance;
-                    $this->data['Resticted_balance'] = $restricted_leave_avail_balance;
+                    $this->data['Restricted_balance'] = $restricted_leave_avail_balance;
                     $this->data['users'] = $all_user_under_hod;
                     $name="";
                     foreach($this->data['users'] as $user){
@@ -68,8 +68,11 @@ class Leave_history extends MY_Controller {
                     $this->data['leave_history_casual'] = array();
                     $this->data['leave_history_restricted'] = array();
                     $this->data['name'] = $name;
-                    $this->data['leave_history_casual'] = $this->lhm->get_casual_leave_history_details($user_id , "2015-01-01","2015-12-31" );
-                    $this->data['leave_history_restricted'] = $this->lhm->get_restricted_leave_history_details($user_id , "2015-01-01","2015-12-31" );
+                    $year = date("Y");
+                    $start_date = "$year"."-01-01";
+                    $end_date = "$year"."-12-31";
+                    $this->data['leave_history_casual'] = $this->lhm->get_casual_leave_history_details($user_id , $start_date,$end_date );
+                    $this->data['leave_history_restricted'] = $this->lhm->get_restricted_leave_history_details($user_id , $start_date,$end_date );
                     
 
                     //var_dump($this->data['users']);
@@ -81,7 +84,7 @@ class Leave_history extends MY_Controller {
                     $all_user_under_hod = $this->ludm->get_users_under_hod($this->emp_id);
                     
                     $this->data['Casual_balance'] = $casual_leave_avail_balance;
-                    $this->data['Resticted_balance'] = $restricted_leave_avail_balance;
+                    $this->data['Restricted_balance'] = $restricted_leave_avail_balance;
                     $this->data['users'] = $all_user_under_hod;
                     $this->data['leave_history_casual'] = $this->lhm->get_casual_leave_history_details($this->emp_id , "2015-01-01","2015-12-31" );
                     $this->data['leave_history_restricted'] = $this->lhm->get_restricted_leave_history_details($this->emp_id , "2015-01-01","2015-12-31" );
@@ -89,8 +92,8 @@ class Leave_history extends MY_Controller {
 //                    var_dump($this->data['users']);
 //                    var_dump($this->data['users']);
                 }
-                
-                $this->drawHeader('Leave histroy');
+
+                $this->drawHeader('Leave history');
                 $this->load->view('leave/leave_history_hod_view' , $this->data);
                 $this->drawFooter();
             }
@@ -100,8 +103,9 @@ class Leave_history extends MY_Controller {
                 $restricted_leave_avail_balance = $this->rm->get_restricted_leave_balance($this->emp_id);
                 $this->data['leave_history_casual'] = $this->lhm->get_casual_leave_history_details($this->emp_id , "2015-01-01","2015-12-31" );
                 $this->data['leave_history_restricted'] = $this->lhm->get_restricted_leave_history_details($this->emp_id , "2015-01-01","2015-12-31" );
+
                 $this->data['Casual_balance'] = $casual_leave_avail_balance;
-                $this->data['Resticted_balance'] = $restricted_leave_avail_balance;
+                $this->data['Restricted_balance'] = $restricted_leave_avail_balance;
 
                 //var_dump($this->data['Casual_balance']);
                 $this->drawHeader('Leave History');

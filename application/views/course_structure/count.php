@@ -12,13 +12,27 @@ $ui = new UI();
 						->id('count_core')
 						->name('count_core')
 						->show();
-						
-					$ui->input()
+					if(isset($CS_session['ele_count']) && $CS_session['ele_count'] == 0)
+					{
+						$ui->input()
 						->placeholder('input text')
 						->label('Elective Subjects')
 						->id('count_elective')
 						->name('count_elective')
+						->value("0")
+						->disabled()
 						->show();
+					}
+					else
+					{
+						$ui->input()
+						->placeholder('input text')
+						->label('Elective Subjects')
+						->id('count_elective')
+						->name('count_elective')
+						->show();	
+					}
+					
 					
 					$ui->button()
 						->value('Proceed')

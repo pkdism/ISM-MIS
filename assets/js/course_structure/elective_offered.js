@@ -52,10 +52,18 @@ $(document).ready(function(){
 				
 				
 				base_str = '<option value = "0" disabled = "true" selected>Select Semester</option>';			
-				for(var i=1;i<=duration*2;i++){
-					base_str += '<option calue="'+i+'">'+i+'</option>';
+				if($course.val() == "honour" || $course.val() == "minor")
+				{
+					for(var i=5;i<=8;i++){
+						base_str += '<option calue="'+i+'">'+i+'</option>';
+					}	
 				}
-				
+				else
+				{
+					for(var i=1;i<=duration*2;i++){
+						base_str += '<option calue="'+i+'">'+i+'</option>';
+					}
+				}
 				$cont_semester.show();
 				$semester.html(base_str).show();
 			   }

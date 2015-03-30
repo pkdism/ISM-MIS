@@ -757,8 +757,8 @@
                            ->id('stu_type')
                            ->name('stu_type')
                            ->width(3)
-                           ->options(array($ui->option()->value('ug')->text('Under Graduate'),
-                                           $ui->option()->value('g')->text('Graduate'),
+                           ->options(array($ui->option()->value('ug')->text('UnderGraduate'),
+										   $ui->option()->value('g')->text('Graduate'),
                                            $ui->option()->value('pg')->text('Post Graduate'),
                                            $ui->option()->value('jrf')->text('Junior Research Fellow'),
                                            $ui->option()->value('pd')->text('Post Doctoral Fellow')))

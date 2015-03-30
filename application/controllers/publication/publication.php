@@ -10,9 +10,6 @@ class Publication extends MY_Controller{
 	}
 
 	public function index(){
-		/*var_dump($temp[0]->type_name);
-		var_dump($this->session->userdata("name"));*/
-		//$this->addJS("publication/add_publication.js");
 		$data= array();
 		$data['prk_types'] = $this->basic_model->get_prk_types();
 		$this->drawHeader();
@@ -31,8 +28,6 @@ class Publication extends MY_Controller{
 	}
 
 	public function addPublication(){
-		/*$this->output->set_content_type('application/json');
-		$this->output->set_output(json_encode($this->input->post()));*/
 		$data['rec_id'] = uniqid();
 		$data['title'] = $this->input->post('title');
 		$data['type_id'] = $this->input->post('publication_type');
@@ -64,7 +59,7 @@ class Publication extends MY_Controller{
 			$data['isbn_no'] = $this->input->post('isbn_no');
 			$data['publisher'] = $this->input->post('publisher');
 		}
-		$data['page_no'] = $this->input->post('page_range');
+		$data['page_no'] = $this->input->post('page_no');
 		$data['other_info'] = $this->input->post('other_info');
 		$data['no_of_authors'] = $this->input->post('no_of_authors');
 
@@ -140,7 +135,7 @@ class Publication extends MY_Controller{
 			$data['publication']['issue_no'] = $temp[0]->issue_no;
 			$data['publication']['edition'] = $temp[0]->edition;
 			$data['publication']['isbn_no'] = $temp[0]->isbn_no;
-			$data['publication']['venue'] = $temp[0]->place;
+			$data['publication']['place'] = $temp[0]->place;
 			$data['publication']['publisher'] = $temp[0]->publisher;
 			$data['publication']['chapter_name'] = $temp[0]->chapter_name;
 			$data['publication']['chapter_no'] = $temp[0]->chapter_no;
@@ -155,8 +150,6 @@ class Publication extends MY_Controller{
 			$sess['pub_data']['no_of_authors'] =$temp[0]->no_of_authors;
 			$sess['pub_data']['other_authors'] = $temp[0]->other_authors;
 			$this->session->set_userdata($sess);
-			//$data['publication']['session'] = $this->session->all_userdata();
-			//var_dump($temp);
 			$this->drawHeader('Edit Publication');
 			$this->load->view('publication/edit',$data);
 			$this->drawFooter();
@@ -193,8 +186,6 @@ class Publication extends MY_Controller{
 	}
 
 	public function submit_edit(){
-		/*$this->output->set_content_type('application/json');
-		$this->output->set_output(json_encode($this->input->post()));*/
 		$sess = $this->session->userdata('pub_data');
 		$data['rec_id'] = $sess['rec_id'];
 		$data['title'] = $this->input->post('title');
@@ -205,7 +196,7 @@ class Publication extends MY_Controller{
 		$data['begin_date'] = $data['begin_date']->format('Y-m-d h:i:s');
 		$data['place'] = '';
 		$data['vol_no'] = '';
-		$data['venue'] = '';
+		$data['place'] = '';
 		$data['issue_no'] = '';
 		$data['end_date'] = '';
 		$data['edition'] = '';
@@ -243,7 +234,6 @@ class Publication extends MY_Controller{
 		$data['other_authors'] = $sess['other_authors'];
 		$data['no_of_approval'] = $sess['other_authors'] + 1;
 		
-		//send notification to co-authors to ask approval
 		$co_authors = $this->basic_model->get_ism_author_detail_by_pub($sess['rec_id']);
 		for($i=0;$i<$data['no_of_authors']-$data['other_authors'];$i++){
 			if($this->session->userdata('id') != $co_authors[$i]->id){
@@ -264,15 +254,12 @@ class Publication extends MY_Controller{
 			$this->session->set_flashdata("flashError","There was some error. Please Try again Later.");	
 		}
 		redirect('publication/publication/editpublication');
-		//var_dump($this->input->post());
 	}
 	
 	public function view(){
 		$temp = array();
 		$temp['emp_id'] = $this->session->userdata('id');
 		$temp['publications'] = $this->basic_model->get_own_publications($temp);
-		//var_dump($temp);
-		//echo $this->session->userdata('id');
 		$data['flag'] = 0;
 		$i=0;
 		foreach($temp['publications'] as $pub){
@@ -302,6 +289,9 @@ class Publication extends MY_Controller{
 			$data['flag'] = 1;
 			$i++;
 		}
+		$own_name = array();
+		$own_name = $this->basic_model->get_name_of_author_by_emp_id($this->session->userdata('id'));
+		$data['own_name'] = $own_name[0]->name;
 		$this->drawHeader('Search Publication');
 		$this->load->view('publication/view_own_publications',$data);
 		$this->drawFooter();
@@ -315,7 +305,6 @@ class Publication extends MY_Controller{
 		$temp['begin_date'] = $this->input->post('begin_date');
 		$temp['end_date'] = $this->input->post('end_date');
 		$temp['publications'] = $this->basic_model->search($temp);
-		//var_dump($temp);
 		if(count($temp['publications']) > 0){
 			$i=0;
 			foreach($temp['publications'] as $pub){
@@ -423,15 +412,12 @@ class Publication extends MY_Controller{
 		$data = array();
 		$data['rec_id'] = $this->input->post('rec_id');
 		$data['reason'] = $this->input->post('reason');
-		//var_dump($data);
 		$this->basic_model->remove_own_from_publication($data['rec_id'],$this->session->userdata('id'));
 		$this->basic_model->decrease_no_of_approval_after_decline($data['rec_id']);
 		$data['ism_authors'] = $this->basic_model->get_approved_author($data['rec_id']);
-		//var_dump($data);
 		foreach ($data['ism_authors'] as $authors){
-			$temp = $this->basic_model->get_name_of_author_by_emp_id($authors->emp_id);
-			//var_dump($temp);
-			$title = "Declining of Publication by ".$temp->name;
+			$temp = $this->basic_model->get_name_of_author_by_emp_id($this->session->userdata('id'));
+			$title = "Declining of Publication by ".$temp[0]->name;
 			$description = $data['reason'];
 			$link = "publication/publication/view";
 			$this->notification->notify($authors->emp_id,"emp",$title,$description,$link,"");

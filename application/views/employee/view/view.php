@@ -73,13 +73,15 @@ echo '<div id="print" >';
 					            $ui->callout()->title("Rejected".$ui->label()->uiType('danger')->id('pending_basic')->classes('pull-right')->text('Show'))->desc("Please contact the Establishment Section for the same.".(($reject)? "<br>Reason behind rejection : ".$reject->reason : ""))->uiType('danger')->show();
 					        }
 
-					        $pending_data['name'] = $pending_emp->salutation.'. '.ucwords(trim($pending_emp->first_name)).' '.trim(ucwords(trim($pending_emp->middle_name)).' '.ucwords(trim($pending_emp->last_name)));
-							$pending_data['department']=$this->departments_model->getDepartmentById($pending_emp->dept_id)->name;
-    						$pending_data['designation']=$this->designations_model->getDesignationById($pending_emp->designation)->name;
+					        if($pending_emp && $pending_permanent_address && $pending_present_address) {
+						        $pending_data['name'] = $pending_emp->salutation.'. '.ucwords(trim($pending_emp->first_name)).' '.trim(ucwords(trim($pending_emp->middle_name)).' '.ucwords(trim($pending_emp->last_name)));
+								$pending_data['department']=$this->departments_model->getDepartmentById($pending_emp->dept_id)->name;
+	    						$pending_data['designation']=$this->designations_model->getDesignationById($pending_emp->designation)->name;
 
-							$pending_data['permanent_pretty'] = $pending_permanent_address->line1.',<br>'.((trim($pending_permanent_address->line2)=='')? '':$pending_permanent_address->line2.',<br>').ucwords($pending_permanent_address->city).', '.ucwords($pending_permanent_address->state).' - '.$pending_permanent_address->pincode.'<br>'.ucwords($pending_permanent_address->country).'<br>Contact no. '.$pending_permanent_address->contact_no;
-				        	$pending_data['present_pretty'] = $pending_present_address->line1.',<br>'.((trim($pending_present_address->line2)=='')? '':$pending_present_address->line2.',<br>').ucwords($pending_present_address->city).', '.ucwords($pending_present_address->state).' - '.$pending_present_address->pincode.'<br>'.ucwords($pending_present_address->country).'<br>Contact no. '.$pending_present_address->contact_no;
-
+								$pending_data['permanent_pretty'] = $pending_permanent_address->line1.',<br>'.((trim($pending_permanent_address->line2)=='')? '':$pending_permanent_address->line2.',<br>').ucwords($pending_permanent_address->city).', '.ucwords($pending_permanent_address->state).' - '.$pending_permanent_address->pincode.'<br>'.ucwords($pending_permanent_address->country).'<br>Contact no. '.$pending_permanent_address->contact_no;
+					        	$pending_data['present_pretty'] = $pending_present_address->line1.',<br>'.((trim($pending_present_address->line2)=='')? '':$pending_present_address->line2.',<br>').ucwords($pending_present_address->city).', '.ucwords($pending_present_address->state).' - '.$pending_present_address->pincode.'<br>'.ucwords($pending_present_address->country).'<br>Contact no. '.$pending_present_address->contact_no;
+					        }
+						    
 						    $basic_details_status = $emp_validation_details->basic_details_status;
 					    }
 						view_basic_details($data,$emp,$ft,$pending_data,$pending_emp,$pending_ft,$basic_details_status);

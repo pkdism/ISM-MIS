@@ -5,6 +5,14 @@
 	$form = $ui->form()->action('publication/publication/submit_edit')->open();
 	$col11 = $ui->col()->width(8)->open();
 	$box = $ui->box()->uiType('primary')->solid()->title('Edit Publication')->open();
+		$temp = $publication['begin_date'];
+		$begin_date = $temp[8].$temp[9].'-';
+		$begin_date .= $temp[5].$temp[6].'-';
+		$begin_date .= $temp[0].$temp[1].$temp[2].$temp[3];
+		$temp = $publication['end_date'];
+		$end_date = $temp[8].$temp[9].'-';
+		$end_date .= $temp[5].$temp[6].'-';
+		$end_date .= $temp[0].$temp[1].$temp[2].$temp[3];
 		if ($publication['type_id']==1 || $publication['type_id']==2)
 		{
 			$row1 = $ui->row()->open();
@@ -24,11 +32,10 @@
 				$innerCol2 = $ui->col()->width(6)->open();
 					$ui->input()->label('Volume No.')->name('vol_no')->value($publication['vol_no'])->show();
 				$innerCol2->close();
-
 				$innerColumn3 = $ui->col()->width(6)->open();
 					$ui->datePicker()->label('Date')->id('date')
 					   ->name('begin_date')->placeholder("dd-mm-yyyy")
-					   ->value($publication['begin_date'])
+					   ->value($begin_date)
 					   ->dateFormat('dd-mm-yyyy')->show();
 				$innerColumn3->close();				
 
@@ -74,12 +81,12 @@
 			$row2 = $ui->row()->open();
 
 				$innerColumn2 = $ui->col()->width(6)->open();
-					$ui->input()->label('Venue')->name('venue')->value($publication['venue'])->show();
+					$ui->input()->label('Venue')->name('place')->value($publication['place'])->show();
 				$innerColumn2->close();
 
 				$innerColumn3 = $ui->col()->width(6)->open();
 					$ui->datePicker()->label('Begin date')->name('begin_date')->placeholder("dd-mm-yyyy")
-							->dateFormat('yy-mm-dd')->value($publication['begin_date'])->show();
+							->dateFormat('dd-mm-yyyy')->value($begin_date)->show();
 				$innerColumn3->close();
 
 			$row2->close();
@@ -88,7 +95,7 @@
 
 				$innerColumn4 = $ui->col()->width(6)->open();
 					$ui->datePicker()->label('End date')->name('end_date')->placeholder("dd-mm-yyyy")
-							->dateFormat('yy-mm-dd')->value($publication['end_date'])->show();
+							->dateFormat('dd-mm-yyyy')->value($end_date)->show();
 				$innerColumn4->close();
 
 				$innerColumn6 = $ui->col()->width(6)->open();
@@ -131,7 +138,7 @@
 
 				$innerColumn3 = $ui->col()->width(6)->open();
 					$ui->datePicker()->label('Date')->id('date')
-					   ->name('begin_date')->placeholder("dd-mm-yyyy")->value($publication['begin_date'])
+					   ->name('begin_date')->placeholder("dd-mm-yyyy")->value($begin_date)
 					   ->dateFormat('dd-mm-yyyy')->show();
 				$innerColumn3->close();
 
@@ -167,7 +174,7 @@
 
 				$innerColumn3 = $ui->col()->width(6)->open();
 					$ui->datePicker()->label('Date')->id('date')
-					   ->name('begin_date')->placeholder("dd-mm-yyyy")->value($publication['begin_date'])
+					   ->name('begin_date')->placeholder("dd-mm-yyyy")->value($begin_date)
 					   ->dateFormat('dd-mm-yyyy')->show();
 				$innerColumn3->close();
 

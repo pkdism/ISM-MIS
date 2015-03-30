@@ -1,0 +1,12 @@
+This is the MIS system I (along with my team) developed for my college, IIT Dhanbad.
+
+The Management Information System handles all the admin tasks for the college such as:
+- Maintaining courses
+- Maintaining student records
+- Maintaining employee records
+- Handling notices/circulars
+- Many more
+
+The system also offers a portal for students/employees to update themselves with latest college happenings, etc.
+
+The application is built in the CodeIgniter PHP framework.
